@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         header("Location: ");
                         break;
                     case 'member':
-                        header("Location: index.html");
+                        header("Location: member-homepage.php");
                         break;
                     default:
                         echo "Invalid user type.";
