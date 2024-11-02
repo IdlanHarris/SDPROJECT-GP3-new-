@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = $_POST['password'];
 
         // Prepare SQL query to fetch user data
-        $stmt = $connection->prepare("SELECT user_id, username, password, user_type, verify_token, is_active FROM users WHERE username = ?");
+        $stmt = $connection->prepare("SELECT user_id, email, password, user_type, verify_token, is_active FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -51,8 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             } else {
                 // If account is not active, send a verification email
-                $verificationToken = $user['verify_token'];
-                sendVerificationEmail($user['username'], $verificationToken);
+                $verificationToken = mt_rand(100000, 999999);
+                $stmt = $connection->prepare("UPDATE users SET verify_token = ? WHERE email = ?");
+                $stmt->execute([$verificationToken, $user['email']]);
+                sendVerificationEmail($user['email'], $verificationToken);
                 echo "Your account is inactive. Please check your email to verify your account.";
                 header("Location: verificationPage.php");
             }

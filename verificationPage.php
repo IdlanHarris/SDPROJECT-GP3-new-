@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if the entered token matches the token in the database
     $stmt = $connection->prepare("SELECT verify_token FROM users WHERE email = ?");
     $stmt->execute([$email]);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($row && $row['verify_token'] == $userToken) {
+    if ($user && $user['verify_token'] == $userToken) {
         // If the token is correct, activate the user
-        $stmt = $connection->prepare("UPDATE users SET is_active = 1 WHERE email = ?");
+        $stmt = $connection->prepare("UPDATE users SET is_active = 1, verify_token = NULL WHERE email = ?");
         $stmt->execute([$email]);
         echo "Your account has been verified!";
         header("Location: Login.html"); // Redirect to login page
@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <form action="verificationPage.php" method="POST"> <!-- Updated action URL -->
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <input type="text" placeholder="Verification Code" id="verification_code" name="verification_code" required>
+                                    <input type="number" placeholder="Verification Code" id="verification_code" name="verification_code" required>
                                 </div>
                                 <div class="col-lg-12 text-center"> <!-- Center the button -->
                                     <button type="submit" class="btn btn-primary">Verify</button> <!-- Updated button text -->
