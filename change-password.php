@@ -13,31 +13,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $resetCode = trim($_POST['reset_code']);
     $newPassword = trim($_POST['new_password']);
     $confirmPassword = trim($_POST['confirm_password']);
+    $hashed_password = password_hash($newPassword, PASSWORD_DEFAULT);
+
     echo ("Data fetch: <br>");
     echo ("Email: " . $email . "<br>" . "Code: " . $resetCode . "<br>" . "Password: " . $newPassword . "<br>" ."Confirm Password: " . $confirmPassword . "<br>");
 
+    // Fetching reset code and expiry from database using email
+    $stmt = $connection->prepare("SELECT reset_token_expiry, reset_token FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+    $reset_token = $user['reset_token'];
+    $reset_token_expiry = $user['reset_token_expiry'];
+    
     // Check for password and confirm password
-    if ($newPassword === $confirmPassword) {
-        // Verify email and reset_token
-        $stmt = $connection->prepare("SELECT reset_token_expiry FROM users WHERE email = ? AND reset_token = ?");
-        $stmt->execute([$email, $resetCode]);
-        $user = $stmt->fetch();
-
-        if ($user && strtotime($user['reset_token_expiry']) > time()) {
-            // Update password in the database
-            $stmt = $connection->prepare("UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE email = ?");
-            $stmt->execute([$newPassword, $email]);
-
-            echo "Password updated successfully.<br>";
-
-            // Redirect to login page
-            header("Location: Login.html");
-            exit;
+    if ($reset_token === $resetCode) {
+        echo ("reset token is valid<br>");
+        if ($newPassword === $confirmPassword) {
+            echo ("Password is correct<br>");
+            if (strtotime($reset_token_expiry) > time()) {
+                // Update password in the database
+                $stmt = $connection->prepare("UPDATE users SET password = ?, hash_password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE email = ?");
+                $stmt->execute([$newPassword, $hashed_password, $email]);
+    
+                echo "Password updated successfully.<br>";
+    
+                // Redirect to login page
+                header("Location: Login.html");
+                exit;
+            } else {
+                echo "Invalid or expired reset code.";
+            }
         } else {
-            echo "Invalid or expired reset code.";
+            echo "Passwords do not match.";
         }
-    } else {
-        echo "Passwords do not match.";
+    }else{
+        echo "<script>window.location.href = 'change-password.html#'; alert('Invalid Code. Please try again.'); </script>";
     }
+    
 }
 ?>
