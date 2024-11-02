@@ -4,7 +4,7 @@ session_start(); // Start the session
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // If not logged in, redirect to the login page
-    header("Location: /");
+    header("Location: Login.html");
     exit();
 }
 ?>
@@ -103,22 +103,21 @@ if (!isset($_SESSION['user_id'])) {
                                 <ul class="dropdown">
                                     <li><a href="Login.html">Login</a></li>
                                     <li><a href="Signup.html">Sign Up</a></li>
-                                    <li><a href="#">My account</a></li>
-                                    <li><a href="Logout.php">Log Out</a></li>
+                                    <li><a href="./bmi-calculator.html">Bmi calculate</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./class-details.html">Classes</a></li>
-                            <li><a href="./services.html">Services</a></li>
-                            <li><a href="./about-us.html">About Us</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
-                            <li><a href="#">Pages</a>
+                            <li><a href="./class-details.html">Classes</a>
                                 <ul class="dropdown">
                                     <li><a href="./class-timetable.html">Classes timetable</a></li>
-                                    <li><a href="./bmi-calculator.html">Bmi calculate</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./services.html">Services</a></li>
+                            <li><a href="./contact.html">Contact Us</a></li>
+                            <li><a href="./about-us.html">About Us</a>
+                                <ul class="dropdown">
                                     <li><a href="./gallery.html">Gallery</a></li>
                                     <li><a href="./blog.html">Our blog</a></li>
                                     <li><a href="./team.html">Our team</a></li>
-                                    <li><a href="./404.html">404</a></li>
                                 </ul>
                             </li>
                         </ul>
