@@ -16,21 +16,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Retrieve and sanitize input data
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = trim($_POST['username']);
+        $password = trim($_POST['password']);
 
         // Prepare SQL query to fetch user data
-        $stmt = $connection->prepare("SELECT user_id, email, password, user_type, verify_token, is_active FROM users WHERE username = ?");
+        $stmt = $connection->prepare("SELECT user_id, email, hash_password, user_type, verify_token, is_active FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Check if user exists and password is correct
-        if ($user) {
+        // Check if user exists
+        if ($user && password_verify($password, $user['hash_password'])) {
             // Check if the account is active
             if ($user['is_active'] == 1) {
                 session_regenerate_id(); // Regenerate session ID for security
                 $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['username'] = $user['username'];
+                $_SESSION['username'] = $username;
                 $_SESSION['user_type'] = $user['user_type'];
 
                 // Redirect based on user type
@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 sendVerificationEmail($user['email'], $verificationToken);
                 echo "Your account is inactive. Please check your email to verify your account.";
                 header("Location: verificationPage.php");
+                exit();
             }
         } else {
             echo "Invalid username or password.";

@@ -1,9 +1,7 @@
 <?php
-
+session_start(); // Ensure session is started
 require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php'; // Autoload dependencies
 use App\Database;
-
-session_start(); // Ensure session is started
 
 // Create a new instance of the Database class and establish a connection
 $database = new Database();
@@ -16,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $currentPass = trim($_POST['currPass']);
         $newPass = trim($_POST['newPass']);
         $confirmPass = trim($_POST['confPass']);
-        $username = $_SESSION['username'] ?? ''; // Fetch the username from the session
-        $hashed_password = password_hash( $hashed_password, PASSWORD_DEFAULT);
+        $username = $_SESSION['username']; // Fetch the username from the session
+        $hashed_password = password_hash( $newPass, PASSWORD_DEFAULT);
 
         // Step 2: Validate input
         if (empty($currentPass) || empty($newPass) || empty($confirmPass)) {
@@ -65,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         header("Location: staffDashboard.php");
                         break;
                     case 'member':
-                        header("Location: memberHomePage.php");
+                        header("Location: member-homepage.php");
                         break;
                     default:
                         echo "Invalid user type.";
