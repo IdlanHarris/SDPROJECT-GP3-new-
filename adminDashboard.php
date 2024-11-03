@@ -52,7 +52,7 @@ $memberResult = $connection->query($memberQuery);
     <li><a href="#section2">Manage Staff</a></li>
     <li><a href="#section3">Manage Member</a></li>
     <li><a href="#section4">Products Information</a></li>
-    <li><a href="#section5">Customer Orders</a></li>
+    <li><a href="customer-orders.php">Customer Orders</a></li>
     <li><a href="reviewfeedback.php">Review Feedback</a></li>
     <li><a href="LogOut.php">Logout</a></li>
   </ul>
@@ -263,35 +263,7 @@ $memberResult = $connection->query($memberQuery);
 </div>
 
 
-  <!-- Customer Orders Table -->
-  <div id="section5" class="well">
-    <h4>Customer Orders</h4>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Customer Name</th>
-          <th>Total</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>John Doe</td>
-          <td>$100.00</td>
-          <td>Completed</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jane Smith</td>
-          <td>$150.00</td>
-          <td>Pending</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+  
 
 <!-- Add Staff Modal -->
 <div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffModalLabel" aria-hidden="true">

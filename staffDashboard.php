@@ -47,7 +47,7 @@ $memberResult = $connection->query($memberQuery);
     <li><a href="#section5">Membership List</a></li>
     <li><a href="#section2">Manage Member</a></li>
     <li><a href="#section3">Products Information</a></li>
-    <li><a href="#section4">Customer Orders</a></li>
+    <li><a href="customer-orders.php">Customer Orders</a></li>
     <li><a href="/html/reviewfeedback.php">Review Feedback</a></li>
     <li><a href="/php/LogOut.php">Logout</a></li>
   </ul>
