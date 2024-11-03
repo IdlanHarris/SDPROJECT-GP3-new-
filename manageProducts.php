@@ -63,9 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
     exit(); // Exit after processing AJAX request
 }
 
-// Fetch all products
-$query = "SELECT product_id, product_name, price, stock_quantity FROM products";
+// Fetch all products in ascending order by product_id
+$query = "SELECT product_id, product_name, price, stock_quantity FROM products ORDER BY product_id ASC";
 $result = $connection->query($query);
+
 ?>
 
 <!DOCTYPE html>

@@ -190,7 +190,7 @@ $memberResult = $connection->query($memberQuery);
     <a href="manageMember.php" class="btn btn-info">Manage Member</a>
   </div>
   
- <!-- Product Information Section -->
+<!-- Product Information Section -->
 <div id="section4" class="well">
     <h4>Product Information</h4>
     <table class="table table-bordered">
@@ -204,9 +204,10 @@ $memberResult = $connection->query($memberQuery);
         </thead>
         <tbody id="productTableBody">
             <?php
-            // Fetch product details from the database
-            $productQuery = "SELECT product_id, product_name, price, stock_quantity FROM products";
+            // Fetch product details from the database in ascending order by product_id
+            $productQuery = "SELECT product_id, product_name, price, stock_quantity FROM products ORDER BY product_id ASC";
             $productResult = $connection->query($productQuery);
+
 
             // Check if there are any products and display them
             if ($productResult && $productResult->rowCount() > 0) {
@@ -242,7 +243,7 @@ $memberResult = $connection->query($memberQuery);
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addProductForm" method="post">
+                <form id="addProductForm" method="POST">
                     <div class="form-group">
                         <label for="productName">Product Name</label>
                         <input type="text" class="form-control" id="productName" name="product_name" required>
@@ -302,40 +303,39 @@ $memberResult = $connection->query($memberQuery);
 
   
 
-  <script>
-$(document).ready(function () {
+<script>
+  $(document).ready(function () {
     $('#addStaffModal form').on('submit', function (e) {
-        e.preventDefault(); // Prevent the default form submission
+      e.preventDefault(); // Prevent the default form submission
 
-        $.ajax({
-            type: 'POST',
-            url: 'addStaff.php', // Path to the PHP file handling the form submission
-            data: $(this).serialize(), // Serialize the form data
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    // Close the modal
-                    $('#addStaffModal').modal('hide');
+      $.ajax({
+        type: 'POST',
+        url: 'addStaff.php', // Path to the PHP file handling the form submission
+        data: $(this).serialize(), // Serialize the form data
+        dataType: 'json',
+        success: function (response) {
+          if (response.success) {
+            // Close the modal
+            $('#addStaffModal').modal('hide');
 
-                    // Reset the form fields
-                    $('#addStaffModal form')[0].reset();
+            // Reset the form fields
+            $('#addStaffModal form')[0].reset();
 
-                    // Update the table with the new staff member
-                    updateStaffTable(response.staff); // Assuming response contains the staff data
-                } else {
-                    alert(response.message || "Failed to add staff.");
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error: ", error); // Log any error details
-                alert('An error occurred. Please try again.');
-            }
-        });
+            // Update the table with the new staff member
+            updateStaffTable(response.staff); // Assuming response contains the staff data
+          } else {
+              alert(response.message || "Failed to add staff.");
+          }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error: ", error); // Log any error details
+            alert('An error occurred. Please try again.');
+        }
+      });
     });
-});
 
 
-    // Function to update the staff table
+  // Function to update the staff table
     function updateStaffTable(staff) {
         const newRow = `<tr>
             <td>${staff.user_id}</td>
@@ -347,96 +347,49 @@ $(document).ready(function () {
 
         $('#staffTableBody').append(newRow); // Update the staff table body
     }
-});
-
-
-$(document).ready(function () {
-    $('#addProductForm').on('submit', function (e) {
-        e.preventDefault(); // Prevent the default form submission
-
-        $.ajax({
-            type: 'POST',
-            url: '/php/addProducts.php', // Correct path to the PHP file handling the form submission
-            data: $(this).serialize(), // Serialize the form data
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    // Close the modal
-                    $('#addProductModal').modal('hide');
-
-                    // Optionally reset the form fields
-                    $('#addProductForm')[0].reset();
-
-                    // Update the table with the new product
-                    updateProductTable(response.product); // Assuming response contains the product data
-                } else {
-                    alert(response.message); // Show error message
-                }
-            },
-            error: function () {
-                alert('An error occurred. Please try again.');
-            }
-        });
-    });
-
-    // Function to update the product table
-    function updateProductTable(product) {
-        const newRow = `<tr>
-            <td>${product.product_id}</td>
-            <td>${product.product_name}</td>
-            <td>${product.price}</td>
-            <td>${product.stock_quantity}</td>
-        </tr>`;
-
-        $('#productTableBody').append(newRow); // Update the product table body
-    }
-});
-
+  });
 </script>
+
 <script>
-$(document).ready(function () {
-    $('#addProductForm').on('submit', function (e) {
-        e.preventDefault(); // Prevent the default form submission
+    $(document).ready(function () {
+        $('#addProductForm').on('submit', function (e) {
+            e.preventDefault();
 
-        $.ajax({
-            type: 'POST',
-            url: '/php/addProduct.php', // Correct path to the PHP file handling the form submission
-            data: $(this).serialize(), // Serialize the form data
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    // Close the modal
-                    $('#addProductModal').modal('hide');
-
-                    // Optionally reset the form fields
-                    $('#addProductForm')[0].reset();
-
-                    // Update the table with the new product
-                    updateProductTable(response.product); // Assuming response contains the new product data
-                } else {
-                    alert(response.message); // Show error message
+            $.ajax({
+                type: 'POST',
+                url: 'addProduct.php',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        $('#addProductModal').modal('hide');
+                        $('#addProductForm')[0].reset();
+                        updateProductTable(response.product);
+                    } else {
+                        alert(response.message || 'An error occurred. Please try again.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                    console.error("Response Text: ", xhr.responseText); // Logs the server response for debugging
+                    alert('An unexpected error occurred. Please try again.');
                 }
-            },
-            error: function () {
-                alert('An error occurred. Please try again.');
-            }
+            });
         });
+
+        function updateProductTable(product) {
+            const newRow = `
+                <tr>
+                    <td>${product.product_id}</td>
+                    <td>${product.product_name}</td>
+                    <td>${product.price}</td>
+                    <td>${product.stock_quantity}</td>
+                </tr>
+            `;
+            $('#productTableBody').append(newRow);
+        }
     });
-
-    function updateProductTable(product) {
-        const newRow = `
-            <tr>
-                <td>${product.product_id}</td>
-                <td>${product.product_name}</td>
-                <td>${product.price}</td>
-                <td>${product.stock_quantity}</td>
-            </tr>
-        `;
-        $('#productTableBody').append(newRow); // Append the new row to the product table
-    }
-});
 </script>
-
 
 </body>
 </html>
