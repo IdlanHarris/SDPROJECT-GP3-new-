@@ -415,6 +415,112 @@ if (!isset($_SESSION['user_id'])) {
     </div>
     <!-- Gallery Section End -->
 
+    <!-- Product Section Begin -->
+    <section class="team-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="team-title">
+                        <div class="section-title">
+                            <span>Our Product</span>
+                            <h2>BUY WITH US</h2>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="ts-slider owl-carousel">
+                    <div class="col-lg-4">
+                        <div class="ts-item set-bg" data-setbg="img/product/creatine.jpg">
+                            <div class="ts_text">
+                                <h4>Creatine</h4>
+                                <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
+                                <a href="cart.html" class="primary-btn btn-normal appoinment-btn">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ts-item set-bg" data-setbg="img/product/protein.jpg">
+                            <div class="ts_text">
+                                <h4>Protein Powder</h4>
+                                <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
+                                <a href="#" class="primary-btn btn-normal appoinment-btn">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ts-item set-bg" data-setbg="img/product/energyDrink.png " >
+                            <div class="ts_text">
+                                <h4>Energy Drink</h4>
+                                <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
+                                <a href="#" class="primary-btn btn-normal appoinment-btn">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ts-item set-bg" data-setbg="img/product/belt.jpg">
+                            <div class="ts_text">
+                                <h4>Gym Belt</h4>
+                                <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
+                                <a href="#" class="primary-btn btn-normal appoinment-btn">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ts-item set-bg" data-setbg="img/product/shaker.jpg">
+                            <div class="ts_text">
+                                <h4>Shaker</h4>
+                                <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
+                                <a href="#" class="primary-btn btn-normal appoinment-btn">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ts-item set-bg" data-setbg="img/product/straps.jpg">
+                            <div class="ts_text">
+                                <h4>Straps</h4>
+                                <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
+                                <a href="#" class="primary-btn btn-normal appoinment-btn">Add To Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+    document.querySelectorAll('.appoinment-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Get product details
+            const productContainer = this.closest('.ts_text');
+            const productName = productContainer.querySelector('h4').textContent;
+            const quantity = productContainer.querySelector('.quantity-input').value;
+
+            // Get existing cart items from localStorage
+            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Add or update the item in the cart
+            const existingItem = cartItems.find(item => item.name === productName);
+            if (existingItem) {
+                existingItem.quantity = parseInt(existingItem.quantity) + parseInt(quantity);
+            } else {
+                cartItems.push({ name: productName, quantity: parseInt(quantity) });
+            }
+
+            // Save updated cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+
+            // Redirect to the cart page
+            window.location.href = 'cart.html';
+        });
+    });
+</script>
+
+    </section>
+    <!-- Product Section End -->
+
     <!-- Team Section Begin -->
     <section class="team-section spad">
         <div class="container">
