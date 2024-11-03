@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../SDPROJECT-GP3-new-vendor/autoload.php'; // Autoload dependencies
+require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php'; // Autoload dependencies
 use App\Database;
 
 session_start(); // Start the session
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Step 7: Redirect to profile page if successful
-        header("Location: /html/profile.html"); // Adjust the path if necessary
+        header("Location: profile.html"); // Adjust the path if necessary
         exit;
 
     } catch (Exception $e) {

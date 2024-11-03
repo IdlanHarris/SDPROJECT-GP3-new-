@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../SDPROJECT-GP3-new-vendor/autoload.php'; // Autoload dependencies
+require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php'; // Autoload dependencies
 use App\Database;
 
 session_start(); // Start the session
@@ -27,7 +27,7 @@ try {
 
     if ($user) {
         // If profile_image is null or empty, provide a default image
-        $user['profile_image'] = $user['profile_image'] ?: 'assets/Default pfp.png';
+        $user['profile_image'] = $user['profile_image'] ?: 'img/Default pfp.png';
         
         // Include the user_id in the response
         $user['user_id'] = $_SESSION['user_id'];
