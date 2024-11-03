@@ -188,13 +188,10 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="section-title chart-calculate-title">
-                        <span>check your body</span>
+                        
                         <h2>CALCULATE YOUR BMI</h2>
                     </div>
                     <div class="chart-calculate-form">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo
-                            viverra maecenas accumsan lacus vel facilisis.</p>
                         <form action="#">
                             <div class="row">
                                 <div class="col-sm-6">
@@ -207,8 +204,11 @@
                                     <input type="text" placeholder="Age">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" placeholder="Sex">
+                                    <h4 style="color: white;">BMI Result:</h4>
+                                    <div id="bmiResult" style="color: white; font-weight: bold; font-size: 1.5em;"></div>
+
                                 </div>
+                                
                                 <div class="col-lg-12">
                                     <button type="submit">Calculate</button>
                                 </div>
@@ -351,5 +351,38 @@
 
 
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector(".chart-calculate-form form");
+        const resultDiv = document.getElementById("bmiResult"); // Get the result div
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the height and weight values from the input fields
+            const height = parseFloat(form.querySelector('input[placeholder="Height / cm"]').value);
+            const weight = parseFloat(form.querySelector('input[placeholder="Weight / kg"]').value);
+
+            // Check if inputs are valid
+            if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+                alert("Please enter valid height and weight values.");
+                return;
+            }
+
+            // Convert height from cm to meters
+            const heightInMeters = height / 100;
+
+            // Calculate BMI
+            const bmi = weight / (heightInMeters * heightInMeters);
+            const bmiResult = bmi.toFixed(2); // Round to two decimal places
+
+            // Display the result
+            resultDiv.innerHTML = `Your BMI is: ${bmiResult}`; // Update the result div
+        });
+    });
+</script>
+
+
 
 </html>
