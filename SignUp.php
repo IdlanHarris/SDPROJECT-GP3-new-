@@ -28,11 +28,12 @@ try {
     $phoneNumber = trim($_POST['phoneNumber']);
 
     // Step 4: Hash the password for security
-    //$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Step 5: Insert the new user into the database with the custom user_id
-    $stmt = $connection->prepare("INSERT INTO users (user_id, username, email, password, phone_number, user_type) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$newUserId, $username, $email, $password, $phoneNumber, 'member']);
+    $stmt = $connection->prepare("INSERT INTO users (user_id, username, email, password, phone_number, user_type, hash_password) 
+    VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$newUserId, $username, $email, $password, $phoneNumber, 'member', $hashed_password]);
 
     echo "Signup successful.";
     echo "New member added successfully with user_id: $newUserId";

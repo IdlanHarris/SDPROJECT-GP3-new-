@@ -36,10 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Redirect based on user type
                 switch ($user['user_type']) {
                     case 'admin':
-                        header("Location: ");
+                        header("Location: adminDashboard.php");
                         break;
                     case 'staff':
-                        header("Location: ");
+                        header("Location: staffDashboard.php");
                         break;
                     case 'member':
                         header("Location: member-homepage.php");

@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "A 6-digit reset code has been sent to your email.<br>";
 
         // Redirect to login page
-        header("Location: change-password.html");
+        header("Location: reset-password.html");
         exit;
     } else {
         echo "No account found with that email.";
