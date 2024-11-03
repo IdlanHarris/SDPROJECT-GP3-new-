@@ -43,16 +43,15 @@ $memberResult = $connection->query($memberQuery);
 <div class="sidebar" id="mySidebar">
   <h2>Staff</h2>
   <ul class="nav nav-pills nav-stacked">
-    <li><a href="/html/profile.html">Profile</a></li>
-    <li><a href="#section5">Membership List</a></li>
-    <li><a href="#section2">Manage Member</a></li>
-    <li><a href="#section3">Products Information</a></li>
-    <li><a href="customer-orders.php">Customer Orders</a></li>
-    <li><a href="/html/reviewfeedback.php">Review Feedback</a></li>
-    <li><a href="/php/LogOut.php">Logout</a></li>
+    <li><a href="profile.html">Profile</a></li>
+    <li><a href="#section1">Membership List</a></li>
+    <li><a href="#section3">Manage Member</a></li>
+    <li><a href="#section4">Products Information</a></li>
+    <li><a href="customer-orders-staff.php">Customer Orders</a></li>
+    <li><a href="reviewfeedback-staff.php">Review Feedback</a></li>
+    <li><a href="LogOut.php">Logout</a></li>
   </ul>
 </div>
-
 
 
 <!-- Main Content -->
@@ -109,21 +108,21 @@ $memberResult = $connection->query($memberQuery);
     </table>
   </div>
 
-    <!-- Manage Member Section -->
-    <div id="section3" class="well">
-    
-    <div class="">
-  <h2>Member Information</h2>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-      </tr>
-    </thead>
-    <tbody id="memberTableBody">
+   <!-- Manage Member Section -->
+   <div id="section3" class="well">
+   
+   <div class="">
+ <h2>Member Information</h2>
+ <table class="table table-bordered">
+   <thead>
+     <tr>
+       <th>User ID</th>
+       <th>Username</th>
+       <th>Email</th>
+       <th>Phone Number</th>
+     </tr>
+   </thead>
+   <tbody id="memberTableBody">
   <?php
   // Check if there are any members and display them
   if ($memberResult && $memberResult->rowCount() > 0) {
@@ -140,37 +139,7 @@ $memberResult = $connection->query($memberQuery);
   }
   ?>
 
-    <!-- Manage Member Section -->
-    <div id="section3" class="well">
     
-    <div class="">
-  <h2>Member Information</h2>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-      </tr>
-    </thead>
-    <tbody id="memberTableBody">
-  <?php
-  // Check if there are any members and display them
-  if ($memberResult && $memberResult->rowCount() > 0) {
-      while ($row = $memberResult->fetch(PDO::FETCH_ASSOC)) {
-          echo "<tr data-user-id='" . htmlspecialchars($row['user_id']) . "'>";
-          echo "<td>" . htmlspecialchars($row['user_id']) . "</td>";
-          echo "<td>" . htmlspecialchars($row['username']) . "</td>";
-          echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-          echo "<td>" . htmlspecialchars($row['phone_number']) . "</td>";
-          echo "</tr>";
-      }
-  } else {
-      echo "<tr><td colspan='5'>No members found.</td></tr>";
-  }
-  ?>
-</tbody>
 
   </table>
   </div>
