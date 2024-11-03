@@ -56,11 +56,10 @@ $orderResult = $connection->query($orderQuery);
   <ul class="nav nav-pills nav-stacked">
     <li><a href="profile.html">Profile</a></li>
     <li><a href="staffDashboard.php#section1">Membership List</a></li>
-    <li><a href="staffDashboard.php#section2">Manage Staff</a></li>
     <li><a href="staffDashboard.php#section3">Manage Member</a></li>
     <li><a href="staffDashboard.php#section4">Products Information</a></li>
     <li><a href="staffDashboard.php#section5">Customer Orders</a></li>
-    <li><a href="reviewfeedback.php">Review Feedback</a></li>
+    <li><a href="reviewfeedback-staff.php">Review Feedback</a></li>
     <li><a href="LogOut.php">Logout</a></li>
   </ul>
 </div>

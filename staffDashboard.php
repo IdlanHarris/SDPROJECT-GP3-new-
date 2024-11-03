@@ -59,7 +59,7 @@ $memberResult = $connection->query($memberQuery);
   
 
   <!-- Membership List Section -->
-  <div id="section5" class="well">
+  <div id="section1" class="well">
     <h4>Membership List</h4>
     <!-- View Membership -->
     <table class="table table-bordered">
@@ -143,7 +143,7 @@ $memberResult = $connection->query($memberQuery);
 
   </table>
   </div>
-    <a href="/php/manageMember.php" class="btn btn-info">Manage Member</a>
+    <a href="manageMember.php" class="btn btn-info">Manage Member</a>
   </div>
     
     <!-- Product Information Section -->
@@ -160,8 +160,8 @@ $memberResult = $connection->query($memberQuery);
         </thead>
         <tbody id="productTableBody">
             <?php
-            // Fetch product details from the database
-            $productQuery = "SELECT product_id, product_name, price, stock_quantity FROM products";
+            // Fetch product details from the database in ascending order by product_id
+            $productQuery = "SELECT product_id, product_name, price, stock_quantity FROM products ORDER BY product_id ASC";
             $productResult = $connection->query($productQuery);
 
             // Check if there are any products and display them
@@ -184,7 +184,7 @@ $memberResult = $connection->query($memberQuery);
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addProductModal">
         Add Product
     </button>
-    <a href="/php/manageProducts.php" class="btn btn-info">Manage Products</a>
+    <a href="manageProducts-staff.php" class="btn btn-info">Manage Products</a>
 </div>
 
 <!-- Add Product Modal -->
@@ -218,79 +218,45 @@ $memberResult = $connection->query($memberQuery);
     </div>
 </div>
 
-
-  <!-- Customer Orders Table -->
-  <div id="section4" class="well">
-    <h4>Customer Orders</h4>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Customer Name</th>
-          <th>Total</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>John Doe</td>
-          <td>$100.00</td>
-          <td>Completed</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jane Smith</td>
-          <td>$150.00</td>
-          <td>Pending</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
 <script>
-$(document).ready(function () {
-    $('#addProductForm').on('submit', function (e) {
-        e.preventDefault(); // Prevent the default form submission
+    $(document).ready(function () {
+        $('#addProductForm').on('submit', function (e) {
+            e.preventDefault();
 
-        $.ajax({
-            type: 'POST',
-            url: '/php/addProduct.php', // Correct path to the PHP file handling the form submission
-            data: $(this).serialize(), // Serialize the form data
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    // Close the modal
-                    $('#addProductModal').modal('hide');
-
-                    // Optionally reset the form fields
-                    $('#addProductForm')[0].reset();
-
-                    // Update the table with the new product
-                    updateProductTable(response.product); // Assuming response contains the new product data
-                } else {
-                    alert(response.message); // Show error message
+            $.ajax({
+                type: 'POST',
+                url: 'addProduct.php',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        $('#addProductModal').modal('hide');
+                        $('#addProductForm')[0].reset();
+                        updateProductTable(response.product);
+                    } else {
+                        alert(response.message || 'An error occurred. Please try again.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                    console.error("Response Text: ", xhr.responseText); // Logs the server response for debugging
+                    alert('An unexpected error occurred. Please try again.');
                 }
-            },
-            error: function () {
-                alert('An error occurred. Please try again.');
-            }
+            });
         });
-    });
 
-    function updateProductTable(product) {
-        const newRow = `
-            <tr>
-                <td>${product.product_id}</td>
-                <td>${product.product_name}</td>
-                <td>${product.price}</td>
-                <td>${product.stock_quantity}</td>
-            </tr>
-        `;
-        $('#productTableBody').append(newRow); // Append the new row to the product table
-    }
-});
+        function updateProductTable(product) {
+            const newRow = `
+                <tr>
+                    <td>${product.product_id}</td>
+                    <td>${product.product_name}</td>
+                    <td>${product.price}</td>
+                    <td>${product.stock_quantity}</td>
+                </tr>
+            `;
+            $('#productTableBody').append(newRow);
+        }
+    });
 </script>
 
 

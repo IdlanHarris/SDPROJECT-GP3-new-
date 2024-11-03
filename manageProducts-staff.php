@@ -90,11 +90,11 @@ $result = $connection->query($query);
   <h2>Staff</h2>
   <ul class="nav nav-pills nav-stacked">
     <li><a href="profile.html">Profile</a></li>
-    <li><a href="#section1">Membership List</a></li>
-    <li><a href="#section3">Manage Member</a></li>
-    <li><a href="#section4">Products Information</a></li>
-    <li><a href="customer-orders-staff.php">Customer Orders</a></li>
-    <li><a href="reviewfeedback-staff.php">Review Feedback</a></li>
+    <li><a href="staffDashboard.php#section1">Membership List</a></li>
+    <li><a href="staffDashboard.php#section3">Manage Member</a></li>
+    <li><a href="staffDashboard.php#section4">Products Information</a></li>
+    <li><a href="staffDashboard.php#section5">Customer Orders</a></li>
+    <li><a href="reviewfeedback.php">Review Feedback</a></li>
     <li><a href="LogOut.php">Logout</a></li>
   </ul>
 </div>

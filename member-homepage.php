@@ -425,7 +425,6 @@ if (!isset($_SESSION['user_id'])) {
                             <span>Our Product</span>
                             <h2>BUY WITH US</h2>
                         </div>
-                       
                     </div>
                 </div>
             </div>
