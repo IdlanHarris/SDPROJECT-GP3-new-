@@ -1,4 +1,13 @@
 <?php
+session_start(); // Start the session
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // If not logged in, redirect to the login page
+    header("Location: /");
+    exit();
+}
+
 require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php'; // Autoload dependencies
 use App\Database;
 
@@ -24,68 +33,64 @@ try {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../css/feedback.css">
-    <title>Feedback Reviews</title>
-    <style>
-        body {
-            background: #F5F5F5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-        }
-
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4383FF;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
+    <head>
+    <title>Admin Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="adminDashboard.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Rating</th>
-                <th>Feedback Message</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($feedbacks as $row): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($row['rating']); ?></td>
-                    <td><?php echo htmlspecialchars($row['feedback_message']); ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <!-- Sidebar -->
+    <div class="sidebar" id="mySidebar">
+    <h2>Admin</h2>
+    <ul class="nav nav-pills nav-stacked">
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="adminDashboard.php#section1">Membership List</a></li>
+        <li><a href="adminDashboard.php#section2">Manage Staff</a></li>
+        <li><a href="adminDashboard.php#section3">Manage Member</a></li>
+        <li><a href="adminDashboard.php#section4">Products Information</a></li>
+        <li><a href="adminDashboard.php#section5">Customer Orders</a></li>
+        <li><a href="reviewfeedback.php">Review Feedback</a></li>
+        <li><a href="LogOut.php">Logout</a></li>
+    </ul>
+    </div>
 
+    <!-- Main Content -->
+    <div class="content">   
+
+    <!-- Manage Staff Section -->
+    <div id="section2" class="well">
+    <div class="">
+    <h2>Feedback</h2>
+        <table class="table table-bordered">
+            <thead>
+                    <tr>
+                        <th>Rating</th>
+                        <th>Feedback Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($feedbacks as $row): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['rating']); ?></td>
+                            <td><?php echo htmlspecialchars($row['feedback_message']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </tbody>
+        </table>
+    </div>
+    </div>    
 </body>
 </html>
