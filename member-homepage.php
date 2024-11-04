@@ -4,7 +4,7 @@ session_start(); // Start the session
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // If not logged in, redirect to the login page
-    header("Location: Login.html");
+    header("Location: index.html");
     exit();
 }
 ?>
@@ -91,7 +91,7 @@ if (!isset($_SESSION['user_id'])) {
             <div class="row">
                 <div class="col-lg-3">
                     <div class="logo">
-                        <a href="./index.html">
+                        <a href="member-homepage.php">
                             <img src="img/logo.png" alt="" width="225">
                         </a>
                     </div>
@@ -99,10 +99,10 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="col-lg-6">
                     <nav class="nav-menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a>
+                            <li class="active"><a href="member-homepage.php">Home</a>
                                 <ul class="dropdown">
                                     <li><a href="Profile.html">Profile</a></li>
-                                    <li><a href="./bmi-calculator.html">Bmi calculate</a></li>
+                                    <li><a href="bmi-calculator.html">Bmi calculate</a></li>
                                     <li><a href="Logout.php">Log Out</a></li>
                                 </ul>
                             </li>
