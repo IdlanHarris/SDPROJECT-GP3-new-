@@ -20,7 +20,6 @@ if (!$connection) {
     echo json_encode(['success' => false, 'message' => 'database_error']);
     exit();
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // ADD STAFF
@@ -28,12 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Step 1: Retrieve and sanitize input data
             $username = trim($_POST['username']);
             $email = trim($_POST['email']);
-            $password = trim($_POST['password']); // Keep password in plain text
+            $password = trim($_POST['password']);
             $phoneNumber = trim($_POST['phone_number']);
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Debugging: Log input data
-            error_log("Input Data: " . print_r($_POST, true));
 
             // Validate input data
             if (empty($username) || empty($email) || empty($password) || empty($phoneNumber)) {
@@ -59,46 +55,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Step 2: Retrieve the latest user_id from the database
             $stmt = $connection->query("SELECT user_id FROM users WHERE user_id LIKE 'S_%' ORDER BY user_id DESC LIMIT 1");
-            $latestUserId = $stmt->fetchColumn();
-
-            // Debugging: Log the latest user ID
-            error_log("Latest User ID: " . $latestUserId);
+            $latestUser_Id = $stmt->fetchColumn();
 
             // Step 3: Generate the new user_id
-            $newUserId = generateUserId($latestUserId);
-
-            // Debugging: Log the new user ID
-            error_log("New User ID: " . $newUserId);
+            $newUser_Id = generateUserId($latestUser_Id);
 
             // Step 4: Insert the new staff into the database
             $stmt = $connection->prepare("INSERT INTO users (user_id, username, email, password, phone_number, user_type, hash_password, is_active) VALUES (?, ?, ?, ?, ?, 'staff', ?, '1')");
-            if (!$stmt->execute([$newUserId, $username, $email, $password, $phoneNumber, $hashed_password])) { // Use plain text password
-                // Log the error message from the database
-                error_log("Insert Failed: " . implode(", ", $stmt->errorInfo()));
+            if (!$stmt->execute([$newUser_Id, $username, $email, $password, $phoneNumber, $hashed_password])) {
                 echo json_encode(['success' => false, 'message' => 'insert_failed']);
                 exit();
             }
 
             // Return success response with new staff data
             $newStaff = [
-                'user_id' => $newUserId,
+                'user_id' => $newUser_Id,
                 'username' => $username,
                 'email' => $email,
                 'phone_number' => $phoneNumber
             ];
 
             echo json_encode(['success' => true, 'staff' => $newStaff]); // Return success and new staff data
-            header("Location: adminDashboard.php");
-            exit();
+            // Remove the redirect header
+            // header("Location: adminDashboard.php");
+            // exit();
         }
     } catch (Exception $e) {
-        // Log error message
-        error_log('Error: ' . $e->getMessage());
         echo json_encode(['success' => false, 'message' => 'server_error', 'details' => $e->getMessage()]);
         exit();
     }
 }
-
 // Function to generate new user ID based on the latest ID
 function generateUserId($latestUserId) {
     if ($latestUserId) {

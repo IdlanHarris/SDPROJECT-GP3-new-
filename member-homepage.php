@@ -231,7 +231,6 @@ if (!isset($_SESSION['user_id'])) {
     </section>
     <!-- ChoseUs Section End -->
 
-   <!-- Classes Section Begin -->
 <!-- Classes Section Begin -->
 <section class="classes-section spad">
     <div class="container" id="our-classes">
@@ -253,7 +252,13 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="ci-text">
                         <span>STRENGTH</span>
                         <h5>Weightlifting</h5>
-                        <a href="javascript:void(0);" class="open-modal" data-class="Weightlifting"><i class="fa fa-angle-right"></i></a>
+                        <form action="workout-plan.php" method="POST">
+                            <input type="hidden" name="workout_name" value="Weightlifting">
+                            <div class="button-container" style="display: flex; justify-content: right;">
+                                <input type="date" name="booking_date" required>
+                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -266,7 +271,13 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="ci-text">
                         <span>Cardio</span>
                         <h5>Indoor Cycling</h5>
-                        <a href="javascript:void(0);" class="open-modal" data-class="Indoor Cycling"><i class="fa fa-angle-right"></i></a>
+                        <form action="workout-plan.php" method="POST">
+                            <input type="hidden" name="workout_name" value="Indoor Cycling">
+                            <div class="button-container" style="display: flex; justify-content: right;">
+                            <input type="date" name="booking_date" required>
+                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -279,7 +290,13 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="ci-text">
                         <span>STRENGTH</span>
                         <h5>Kettlebell Power</h5>
-                        <a href="javascript:void(0);" class="open-modal" data-class="Kettlebell Power"><i class="fa fa-angle-right"></i></a>
+                        <form action="workout-plan.php" method="POST">
+                            <input type="hidden" name="workout_name" value="Kettlebell Power">
+                            <div class="button-container" style="display: flex; justify-content: right;">
+                            <input type="date" name="booking_date" required>
+                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -292,7 +309,13 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="ci-text">
                         <span>STRENGTH</span>
                         <h5>Dumbbell Exercise</h5>
-                        <a href="javascript:void(0);" class="open-modal" data-class="Dumbbell Exercise"><i class="fa fa-angle-right"></i></a>
+                        <form action="workout-plan.php" method="POST">
+                            <input type="hidden" name="workout_name" value="Dumbbell Exercise">
+                            <div class="button-container" style="display: flex; justify-content: right;">
+                            <input type="date" name="booking_date" required>
+                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -305,7 +328,13 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="ci-text">
                         <span>Flexibility and Balance</span>
                         <h5>Yoga</h5>
-                        <a href="javascript:void(0);" class="open-modal" data-class="Yoga"><i class="fa fa-angle-right"></i></a>
+                        <form action="workout-plan.php" method="POST">
+                            <input type="hidden" name="workout_name" value="Yoga">
+                            <div class="button-container" style="display: flex; justify-content: right;">
+                            <input type="date" name="booking_date" required>
+                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -314,84 +343,7 @@ if (!isset($_SESSION['user_id'])) {
 </section>
 <!-- Classes Section End -->
 
-<!-- Booking Modal -->
-<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="bookingModalLabel">Book a Class</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p id="classInfo">Class Information</p>
-                <label for="classDate">Select Date:</label>
-                <input type="date" id="classDate" class="form-control mb-3" required>
-                <button type="button" class="btn btn-primary" id="bookClassBtn">Book Now</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
-
-<!-- JavaScript to open modal, set class details, and handle booking submission -->
-<script>
-    $(document).ready(function() {
-    // Restrict date selection to today and future dates
-    const today = new Date().toISOString().split("T")[0];
-    $('#classDate').attr('min', today);
-    
-    // Open modal and set class info
-    $('.open-modal').click(function() {
-        var className = $(this).data('class');
-        $('#classInfo').text('You are booking: ' + className);
-        $('#bookingModal').modal('show');
-    });
-
-    // Handle the booking submission
-    $('#bookClassBtn').click(function() {
-        var className = $('#classInfo').text().replace('You are booking: ', '').trim(); // Get class name
-        var classDate = $('#classDate').val(); // Get selected date
-        var userId = 1; // Replace with actual user_id from session or logged-in user
-
-        if (!classDate) {
-            alert("Please select a date.");
-            return;
-        }
-
-        // Send the booking data via AJAX
-        $.ajax({
-            url: 'workoutPlan.php', // Backend PHP script to handle the request
-            type: 'POST',
-            data: {
-                user_id: userId,
-                class: className,
-                date: classDate
-            },
-            success: function(response) {
-                // Handle JSON response
-                var res = JSON.parse(response);
-                if (res.success) {
-                    alert('Class booked successfully!');
-                    $('#bookingModal').modal('hide'); // Close modal
-                } else {
-                    alert('Error booking class: ' + res.message); // Display specific error message
-                }
-            },
-            error: function() {
-                alert('Error in communication. Please try again.');
-            }
-        });
-    });
-});
-
-</script>
-
-<!-- Classes Section End -->
 
 
 
@@ -402,9 +354,8 @@ if (!isset($_SESSION['user_id'])) {
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="bs-text">
-                        <h2>registration now to get more deals</h2>
+                        <h2>Exercise until the body obeys.</h2>
                         <div class="bt-tips">Where health, beauty and fitness meet.</div>
-                        <a href="#" class="primary-btn  btn-normal">Appointment</a>
                     </div>
                 </div>
             </div>

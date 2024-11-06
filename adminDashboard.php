@@ -301,53 +301,51 @@ $memberResult = $connection->query($memberQuery);
     </div>
   </div>
 
-  
-
 <script>
   $(document).ready(function () {
     $('#addStaffModal form').on('submit', function (e) {
-      e.preventDefault(); // Prevent the default form submission
+        e.preventDefault(); // Prevent the default form submission
 
-      $.ajax({
-        type: 'POST',
-        url: 'addStaff.php', // Path to the PHP file handling the form submission
-        data: $(this).serialize(), // Serialize the form data
-        dataType: 'json',
-        success: function (response) {
-          if (response.success) {
-            // Close the modal
-            $('#addStaffModal').modal('hide');
+        $.ajax({
+            type: 'POST',
+            url: 'addStaff.php', // Path to the PHP file handling the form submission
+            data: $(this).serialize(), // Serialize the form data
+            dataType: 'json',
+            success: function (response) {
+                console.log("Response from server:", response); // Log the response
 
-            // Reset the form fields
-            $('#addStaffModal form')[0].reset();
+                if (response.success) {
+                    // Close the modal
+                    $('#addStaffModal').modal('hide');
 
-            // Update the table with the new staff member
-            updateStaffTable(response.staff); // Assuming response contains the staff data
-          } else {
-              alert(response.message || "Failed to add staff.");
-          }
-        },
-        error: function (xhr, status, error) {
-            console.error("Error: ", error); // Log any error details
-            alert('An error occurred. Please try again.');
-        }
-      });
+                    // Reset the form fields
+                    $('#addStaffModal form')[0].reset();
+
+                    // Update the table with the new staff member
+                    updateStaffTable(response.staff); // Assuming response contains the staff data
+                } else {
+                    alert(response.message || "Failed to add staff.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error: ", error); // Log any error details
+                alert('An error occurred. Please try again.');
+            }
+        });
     });
 
-
-  // Function to update the staff table
+    // Function to update the staff table
     function updateStaffTable(staff) {
         const newRow = `<tr>
             <td>${staff.user_id}</td>
             <td>${staff.username}</td>
             <td>${staff.email}</td>
             <td>${staff.phone_number}</td>
-            
         </tr>`;
 
         $('#staffTableBody').append(newRow); // Update the staff table body
     }
-  });
+});
 </script>
 
 <script>
