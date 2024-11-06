@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal Integration Example</title>
+</head>
+<body>
+
+    <h1>Pay with PayPal</h1>
+    <p>Click the button below to complete your payment:</p>
+
+    
+    <!-- Input field for the user to enter payment amount -->
+    <input type="number" id="payment-amount" placeholder="Enter amount" min="1" step="0.01" required>
+    
+
+    <!-- PayPal Button Container -->
+    <div id="paypal-button-container"></div>
+
+    <!-- PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AXiSv0OLKzU4DYQYLjqvgh_ByAu4TTzC9DCs8pGmw8-LikN94MAcldPJote0g0bzUfW5mmKSycLDYwqe&currency=MYR"></script>
+    
+    <script>
+        // Initialize the PayPal Buttons
+        paypal.Buttons({
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                // Get the value entered by the user
+                const amount = document.getElementById('payment-amount').value;
+                
+                // Validate the amount
+                if (!amount || amount <= 0) {
+                    alert("Please enter a valid amount.");
+                    return;
+                }
+
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            currency_code: 'MYR', // Set currency to MYR
+                            value: amount  // Use the dynamic amount entered by the user
+                        }
+                    }]
+                });
+            },
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                    
+                    // Optional: Send transaction data to your server
+                    // fetch('/your-server-endpoint', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    //     body: JSON.stringify({
+                    //         orderID: data.orderID,
+                    //         details: details
+                    //     })
+                    // }).then(response => response.json())
+                    //   .then(data => console.log('Payment recorded:', data));
+                });
+            },
+            onError: function(err) {
+                console.error('An error occurred during the transaction', err);
+            }
+        }).render('#paypal-button-container');
+    </script>
+</body>
+</html>
