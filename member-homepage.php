@@ -414,13 +414,12 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- Pricing Section Begin -->
     <section class="pricing-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <span>Our Plan</span>
-                        <h2>Choose your pricing plan</h2>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Our Plan</span>
+                    <h2>Choose your pricing plan</h2>
                 </div>
             </div>
             <div class="row justify-content-center" id="pricing">
@@ -492,7 +491,9 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+<!-- Pricing Section End -->
     <!-- Pricing Section End -->
 
     <!-- Gallery Section Begin -->
