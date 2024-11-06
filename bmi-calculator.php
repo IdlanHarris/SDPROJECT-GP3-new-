@@ -97,7 +97,7 @@ if (!isset($_SESSION['user_id'])) {
                         <ul>
                             <li class="active"><a href="member-homepage.php">Home</a>
                                 <ul class="dropdown">
-                                    <li><a href="Profile.html">Profile</a></li>
+                                    <li><a href="profile.php">Profile</a></li>
                                     <li><a href="bmi-calculator.php">Bmi calculate</a></li>
                                     <li><a href="Logout.php">Log Out</a></li>
                                 </ul>
@@ -107,7 +107,11 @@ if (!isset($_SESSION['user_id'])) {
                                     <li><a href="./class-timetable.html">Classes timetable</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./services.html">Services</a></li>
+                            <li><a href="./services.html">Services</a>
+                                <ul class="dropdown">
+                                    <li><a href="product-page.php">Our Product</a></li>
+                                </ul>
+                            </li>
                             <li><a href="./contact.html">Contact Us</a></li>
                             <li><a href="./about-us.html">About Us</a>
                                 <ul class="dropdown">

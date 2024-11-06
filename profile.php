@@ -1,3 +1,13 @@
+<?php
+session_start(); // Start the session
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // If not logged in, redirect to the login page
+    header("Location: index.html");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +47,7 @@
             <label class="form-label"><strong>Membership Status:</strong></label>
             <p id="view-status">Loading...</p>
         </div>
-        <a href="editProfile.html"><button class="btn btn-secondary btn-custom">Edit Profile</button></a>
+        <a href="editprofile.php"><button class="btn btn-secondary btn-custom">Edit Profile</button></a>
         <a href="changePass.html"><button class="btn btn-primary btn-custom mt-3">Change Password</button></a>
         <a href=""><button class="btn btn-primary btn-custom mt-3">Purchase History</button></a>
         <a href="workout-history.php"><button class="btn btn-primary btn-custom mt-3">Workout History</button></a>

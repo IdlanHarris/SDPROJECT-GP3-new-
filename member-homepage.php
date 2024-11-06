@@ -104,7 +104,7 @@ if (!isset($_SESSION['user_id'])) {
                         <ul>
                             <li class="active"><a href="member-homepage.php">Home</a>
                                 <ul class="dropdown">
-                                    <li><a href="Profile.html">Profile</a></li>
+                                    <li><a href="profile.php">Profile</a></li>
                                     <li><a href="bmi-calculator.php">Bmi calculate</a></li>
                                     <li><a href="Logout.php">Log Out</a></li>
                                 </ul>
@@ -114,7 +114,11 @@ if (!isset($_SESSION['user_id'])) {
                                     <li><a href="./class-timetable.html">Classes timetable</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./services.html">Services</a></li>
+                            <li><a href="./services.html">Services</a>
+                                <ul class="dropdown">
+                                    <li><a href="product-page.php">Our Product</a></li>
+                                </ul>
+                            </li>
                             <li><a href="./contact.html">Contact Us</a></li>
                             <li><a href="./about-us.html">About Us</a>
                                 <ul class="dropdown">
@@ -157,7 +161,6 @@ if (!isset($_SESSION['user_id'])) {
                             <div class="hi-text">
                                 <span>Shape your body</span>
                                 <h1>Be <strong>strong</strong> traning hard</h1>
-                                <a href="#" class="primary-btn">Get info</a>
                             </div>
                         </div>
                     </div>
@@ -170,7 +173,6 @@ if (!isset($_SESSION['user_id'])) {
                             <div class="hi-text">
                                 <span>Shape your body</span>
                                 <h1>Be <strong>strong</strong> traning hard</h1>
-                                <a href="#" class="primary-btn">Get info</a>
                             </div>
                         </div>
                     </div>
@@ -231,117 +233,117 @@ if (!isset($_SESSION['user_id'])) {
     </section>
     <!-- ChoseUs Section End -->
 
-<!-- Classes Section Begin -->
-<section class="classes-section spad">
-    <div class="container" id="our-classes">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title text-center">
-                    <span>Our Classes</span>
-                    <h2>WHAT WE CAN OFFER</h2>
+    <!-- Classes Section Begin -->
+    <section class="classes-section spad">
+        <div class="container" id="our-classes">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title text-center">
+                        <span>Our Classes</span>
+                        <h2>WHAT WE CAN OFFER</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <!-- Class Item 1 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="img/classes/class-1.jpg" alt="Weightlifting Class">
+            <div class="row">
+                <!-- Class Item 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-item">
+                        <div class="ci-pic">
+                            <img src="img/classes/class-1.jpg" alt="Weightlifting Class">
+                        </div>
+                        <div class="ci-text">
+                            <span>STRENGTH</span>
+                            <h5>Weightlifting</h5>
+                            <form action="workout-plan.php" method="POST">
+                                <input type="hidden" name="workout_name" value="Weightlifting">
+                                <div class="button-container" style="display: flex; justify-content: right;">
+                                    <input type="date" name="booking_date" required>
+                                    <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="ci-text">
-                        <span>STRENGTH</span>
-                        <h5>Weightlifting</h5>
-                        <form action="workout-plan.php" method="POST">
-                            <input type="hidden" name="workout_name" value="Weightlifting">
-                            <div class="button-container" style="display: flex; justify-content: right;">
+                </div>
+                <!-- Class Item 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-item">
+                        <div class="ci-pic">
+                            <img src="img/classes/class-2.jpg" alt="Indoor Cycling Class">
+                        </div>
+                        <div class="ci-text">
+                            <span>Cardio</span>
+                            <h5>Indoor Cycling</h5>
+                            <form action="workout-plan.php" method="POST">
+                                <input type="hidden" name="workout_name" value="Indoor Cycling">
+                                <div class="button-container" style="display: flex; justify-content: right;">
                                 <input type="date" name="booking_date" required>
-                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
-                            </div>
-                        </form>
+                                    <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Class Item 2 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="img/classes/class-2.jpg" alt="Indoor Cycling Class">
-                    </div>
-                    <div class="ci-text">
-                        <span>Cardio</span>
-                        <h5>Indoor Cycling</h5>
-                        <form action="workout-plan.php" method="POST">
-                            <input type="hidden" name="workout_name" value="Indoor Cycling">
-                            <div class="button-container" style="display: flex; justify-content: right;">
-                            <input type="date" name="booking_date" required>
-                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Class Item 3 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="img/classes/class-3.jpg" alt="Kettlebell Power Class">
-                    </div>
-                    <div class="ci-text">
-                        <span>STRENGTH</span>
-                        <h5>Kettlebell Power</h5>
-                        <form action="workout-plan.php" method="POST">
-                            <input type="hidden" name="workout_name" value="Kettlebell Power">
-                            <div class="button-container" style="display: flex; justify-content: right;">
-                            <input type="date" name="booking_date" required>
-                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
-                            </div>
-                        </form>
+                <!-- Class Item 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-item">
+                        <div class="ci-pic">
+                            <img src="img/classes/class-3.jpg" alt="Kettlebell Power Class">
+                        </div>
+                        <div class="ci-text">
+                            <span>STRENGTH</span>
+                            <h5>Kettlebell Power</h5>
+                            <form action="workout-plan.php" method="POST">
+                                <input type="hidden" name="workout_name" value="Kettlebell Power">
+                                <div class="button-container" style="display: flex; justify-content: right;">
+                                <input type="date" name="booking_date" required>
+                                    <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Class Item 4 -->
-            <div class="col-lg-6 col-md-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="img/classes/class-4.jpg" alt="Dumbbell Exercise Class">
-                    </div>
-                    <div class="ci-text">
-                        <span>STRENGTH</span>
-                        <h5>Dumbbell Exercise</h5>
-                        <form action="workout-plan.php" method="POST">
-                            <input type="hidden" name="workout_name" value="Dumbbell Exercise">
-                            <div class="button-container" style="display: flex; justify-content: right;">
-                            <input type="date" name="booking_date" required>
-                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
-                            </div>
-                        </form>
+                <!-- Class Item 4 -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="class-item">
+                        <div class="ci-pic">
+                            <img src="img/classes/class-4.jpg" alt="Dumbbell Exercise Class">
+                        </div>
+                        <div class="ci-text">
+                            <span>STRENGTH</span>
+                            <h5>Dumbbell Exercise</h5>
+                            <form action="workout-plan.php" method="POST">
+                                <input type="hidden" name="workout_name" value="Dumbbell Exercise">
+                                <div class="button-container" style="display: flex; justify-content: right;">
+                                <input type="date" name="booking_date" required>
+                                    <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Class Item 5 -->
-            <div class="col-lg-6">
-                <div class="class-item">
-                    <div class="ci-pic">
-                        <img src="img/classes/class-5.jpg" alt="Yoga Class">
-                    </div>
-                    <div class="ci-text">
-                        <span>Flexibility and Balance</span>
-                        <h5>Yoga</h5>
-                        <form action="workout-plan.php" method="POST">
-                            <input type="hidden" name="workout_name" value="Yoga">
-                            <div class="button-container" style="display: flex; justify-content: right;">
-                            <input type="date" name="booking_date" required>
-                                <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
-                            </div>
-                        </form>
+                <!-- Class Item 5 -->
+                <div class="col-lg-6">
+                    <div class="class-item">
+                        <div class="ci-pic">
+                            <img src="img/classes/class-5.jpg" alt="Yoga Class">
+                        </div>
+                        <div class="ci-text">
+                            <span>Flexibility and Balance</span>
+                            <h5>Yoga</h5>
+                            <form action="workout-plan.php" method="POST">
+                                <input type="hidden" name="workout_name" value="Yoga">
+                                <div class="button-container" style="display: flex; justify-content: right;">
+                                <input type="date" name="booking_date" required>
+                                    <button type="submit" class="primary-btn pricing-btn" style="padding: 5px 10px; font-size: 12px;">Book Now</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Classes Section End -->
+    </section>
+    <!-- Classes Section End -->
 
     <!-- Banner Section Begin -->
     <section class="banner-section set-bg" data-setbg="img/banner-bg.jpg">
@@ -438,8 +440,7 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </div>
     </div>
-</section>
-<!-- Pricing Section End -->
+    </section>
     <!-- Pricing Section End -->
 
     <!-- Gallery Section Begin -->
@@ -542,7 +543,7 @@ if (!isset($_SESSION['user_id'])) {
                             <span>Our Team</span>
                             <h2>TRAIN WITH EXPERTS</h2>                            
                         </div>
-                        <a href="#" class="primary-btn btn-normal appoinment-btn">MORE DETAILS </a>   
+                        <a href="team.html" class="primary-btn btn-normal appoinment-btn">MORE DETAILS </a>   
                     </div>
                 </div>
             </div>
