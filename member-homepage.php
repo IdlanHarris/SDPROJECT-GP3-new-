@@ -32,6 +32,9 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -228,82 +231,170 @@ if (!isset($_SESSION['user_id'])) {
     </section>
     <!-- ChoseUs Section End -->
 
-    <!-- Classes Section Begin -->
-    <section class="classes-section spad">
-        <div class="container" id="our-classes">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <span>Our Classes</span>
-                        <h2>WHAT WE CAN OFFER</h2>
+   <!-- Classes Section Begin -->
+<!-- Classes Section Begin -->
+<section class="classes-section spad">
+    <div class="container" id="our-classes">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title text-center">
+                    <span>Our Classes</span>
+                    <h2>WHAT WE CAN OFFER</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Class Item 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="class-item">
+                    <div class="ci-pic">
+                        <img src="img/classes/class-1.jpg" alt="Weightlifting Class">
+                    </div>
+                    <div class="ci-text">
+                        <span>STRENGTH</span>
+                        <h5>Weightlifting</h5>
+                        <a href="javascript:void(0);" class="open-modal" data-class="Weightlifting"><i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-1.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>STRENGTH</span>
-                            <h5>Weightlifting</h5>
-                            <a href="#our-classes"><i class="fa fa-angle-right"></i></a>
-                        </div>
+            <!-- Class Item 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="class-item">
+                    <div class="ci-pic">
+                        <img src="img/classes/class-2.jpg" alt="Indoor Cycling Class">
+                    </div>
+                    <div class="ci-text">
+                        <span>Cardio</span>
+                        <h5>Indoor Cycling</h5>
+                        <a href="javascript:void(0);" class="open-modal" data-class="Indoor Cycling"><i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-2.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>Cardio</span>
-                            <h5>Indoor cycling</h5>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
+            </div>
+            <!-- Class Item 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="class-item">
+                    <div class="ci-pic">
+                        <img src="img/classes/class-3.jpg" alt="Kettlebell Power Class">
+                    </div>
+                    <div class="ci-text">
+                        <span>STRENGTH</span>
+                        <h5>Kettlebell Power</h5>
+                        <a href="javascript:void(0);" class="open-modal" data-class="Kettlebell Power"><i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-3.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>STRENGTH</span>
-                            <h5>Kettlebell power</h5>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
+            </div>
+            <!-- Class Item 4 -->
+            <div class="col-lg-6 col-md-6">
+                <div class="class-item">
+                    <div class="ci-pic">
+                        <img src="img/classes/class-4.jpg" alt="Dumbbell Exercise Class">
+                    </div>
+                    <div class="ci-text">
+                        <span>STRENGTH</span>
+                        <h5>Dumbbell Exercise</h5>
+                        <a href="javascript:void(0);" class="open-modal" data-class="Dumbbell Exercise"><i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-4.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>STRENGTH</span>
-                            <h4>Dumbbell Exercise</h4>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
+            </div>
+            <!-- Class Item 5 -->
+            <div class="col-lg-6">
+                <div class="class-item">
+                    <div class="ci-pic">
+                        <img src="img/classes/class-5.jpg" alt="Yoga Class">
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-5.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>Flexibility and Balance</span>
-                            <h4>Yoga</h4>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
+                    <div class="ci-text">
+                        <span>Flexibility and Balance</span>
+                        <h5>Yoga</h5>
+                        <a href="javascript:void(0);" class="open-modal" data-class="Yoga"><i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- ChoseUs Section End -->
+    </div>
+</section>
+<!-- Classes Section End -->
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">Book a Class</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="classInfo">Class Information</p>
+                <label for="classDate">Select Date:</label>
+                <input type="date" id="classDate" class="form-control mb-3" required>
+                <button type="button" class="btn btn-primary" id="bookClassBtn">Book Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript to open modal, set class details, and handle booking submission -->
+<script>
+    $(document).ready(function() {
+    // Restrict date selection to today and future dates
+    const today = new Date().toISOString().split("T")[0];
+    $('#classDate').attr('min', today);
+    
+    // Open modal and set class info
+    $('.open-modal').click(function() {
+        var className = $(this).data('class');
+        $('#classInfo').text('You are booking: ' + className);
+        $('#bookingModal').modal('show');
+    });
+
+    // Handle the booking submission
+    $('#bookClassBtn').click(function() {
+        var className = $('#classInfo').text().replace('You are booking: ', '').trim(); // Get class name
+        var classDate = $('#classDate').val(); // Get selected date
+        var userId = 1; // Replace with actual user_id from session or logged-in user
+
+        if (!classDate) {
+            alert("Please select a date.");
+            return;
+        }
+
+        // Send the booking data via AJAX
+        $.ajax({
+            url: 'workoutPlan.php', // Backend PHP script to handle the request
+            type: 'POST',
+            data: {
+                user_id: userId,
+                class: className,
+                date: classDate
+            },
+            success: function(response) {
+                // Handle JSON response
+                var res = JSON.parse(response);
+                if (res.success) {
+                    alert('Class booked successfully!');
+                    $('#bookingModal').modal('hide'); // Close modal
+                } else {
+                    alert('Error booking class: ' + res.message); // Display specific error message
+                }
+            },
+            error: function() {
+                alert('Error in communication. Please try again.');
+            }
+        });
+    });
+});
+
+</script>
+
+<!-- Classes Section End -->
+
+
+
 
     <!-- Banner Section Begin -->
     <section class="banner-section set-bg" data-setbg="img/banner-bg.jpg">
