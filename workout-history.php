@@ -158,49 +158,45 @@ if (!isset($_SESSION['user_id'])) {
     </section>
     <!-- Breadcrumb Section End -->
 
-<?php
-    // Include your database connection file
-    require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php';
-    use App\Database;
+    <?php
+// Include your database connection file
+require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php';
+use App\Database;
 
-    // Error reporting for debugging
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+// Create a new instance of the Database class and establish a connection
+$database = new Database();
+$connection = $database->connect();
 
-    // Create a new instance of the Database class and establish a connection
-    $database = new Database();
-    $connection = $database->connect();
+// Check if the user is logged in, if not, display an error message
+if (!isset($_SESSION['user_id'])) {
+    die("You must be logged in to view your workout history.");
+}
 
-    // Check if the user is logged in, if not, display an error message
-    if (!isset($_SESSION['user_id'])) {
-        die("You must be logged in to view your workout history.");
+$user_id = $_SESSION['user_id']; // Get user_id from session
+
+try {
+    // Check if user_id exists and is valid
+    if (empty($user_id)) {
+        echo json_encode(['success' => false, 'message' => 'User not logged in']);
+        exit;
     }
 
-    $user_id = $_SESSION['user_id']; // Get user_id from session
+    // Fetch class, class_date, and workout_id for the logged-in user
+    $stmt = $connection->prepare("SELECT workout_id, class, class_date FROM workoutplan_history WHERE user_id = ?");
+    $result = $stmt->execute([$user_id]);
 
-    try {
-        // Check if user_id exists and is valid
-        if (empty($user_id)) {
-            echo json_encode(['success' => false, 'message' => 'User not logged in']);
-            exit;
-        }
-
-        $stmt = $connection->prepare("SELECT class, class_date FROM workoutplan_history WHERE user_id = ?");
-        $result = $stmt->execute([$user_id]);
-
-        if ($result) {
-            echo json_encode(['success' => true, 'message' => 'All data fetch']);
-            // Fetch all the results for the logged-in user
-            $workout_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            // Log the detailed error information if query fails
-            $errorInfo = $stmt->errorInfo(); // Get error details from the PDO statement
-            echo json_encode(['success' => false, 'message' => 'Query execution failed', 'error' => $errorInfo]);
-        }
-    } catch (PDOException $e) {
-        // Log the error message if a database exception occurs
-        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    if ($result) {
+        // Fetch all the results for the logged-in user
+        $workout_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        // Log the detailed error information if query fails
+        $errorInfo = $stmt->errorInfo(); // Get error details from the PDO statement
+        echo json_encode(['success' => false, 'message' => 'Query execution failed', 'error' => $errorInfo]);
     }
+} catch (PDOException $e) {
+    // Log the error message if a database exception occurs
+    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+}
 ?>
 
 <!-- HTML Structure -->
@@ -216,6 +212,7 @@ if (!isset($_SESSION['user_id'])) {
                     <table>
                         <thead>
                             <tr>
+                                <th>Workout ID</th>
                                 <th>Class</th>
                                 <th>Class Date</th>
                             </tr>
@@ -227,13 +224,14 @@ if (!isset($_SESSION['user_id'])) {
                                 // Loop through the workout history and display each entry
                                 foreach ($workout_history as $history) {
                                     echo "<tr>";
+                                    echo "<td>" . htmlspecialchars($history['workout_id']) . "</td>";
                                     echo "<td>" . htmlspecialchars($history['class']) . "</td>";
                                     echo "<td>" . htmlspecialchars($history['class_date']) . "</td>";
                                     echo "</tr>";
                                 }
                             } else {
                                 // If no records are found, display a message indicating that
-                                echo "<tr><td colspan='2'>No workout history found for this user.</td></tr>";
+                                echo "<tr><td colspan='3'>No workout history found for this user.</td></tr>";
                             }
                             ?>
                         </tbody>
@@ -243,7 +241,6 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </div>
 </section>
-
 
 
     <!-- Get In Touch Section Begin -->

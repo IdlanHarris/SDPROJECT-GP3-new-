@@ -343,11 +343,6 @@ if (!isset($_SESSION['user_id'])) {
 </section>
 <!-- Classes Section End -->
 
-
-
-
-
-
     <!-- Banner Section Begin -->
     <section class="banner-section set-bg" data-setbg="img/banner-bg.jpg">
         <div class="container">
