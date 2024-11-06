@@ -136,7 +136,8 @@
                     <div class="breadcrumb-text">
                         <h2>Our Prouct</h2>
                         <div class="bt-option">
-                            <a href="./index.html">Home</a>
+                            <a href="./member-homepage.html">Home</a>
+                            <a href="./services.html">Service</a>
                             <span>Our Product</span>
                         </div>
                     </div>

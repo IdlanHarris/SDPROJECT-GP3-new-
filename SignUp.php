@@ -4,7 +4,7 @@ session_start(); // Start session to store user information
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require __DIR__ . '/../SDPROJECT-GP3/vendor/autoload.php'; // Autoload dependencies
+require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php'; // Autoload dependencies
 use App\Database;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

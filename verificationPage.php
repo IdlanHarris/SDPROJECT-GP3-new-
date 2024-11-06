@@ -1,8 +1,12 @@
 <?php
 session_start(); // Continue the session to retrieve the email
 
-require __DIR__ . '/../SDPROJECT-GP3/vendor/autoload.php'; // Autoload dependencies
+require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php'; // Autoload dependencies
 use App\Database;
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // Check if the email is stored in the session
 if (!isset($_SESSION['email'])) {
