@@ -1,3 +1,15 @@
+<?php
+session_start(); // Start the session
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // If not logged in, redirect to the login page
+    header("Location: index.html");
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -86,7 +98,7 @@
                             <li class="active"><a href="member-homepage.php">Home</a>
                                 <ul class="dropdown">
                                     <li><a href="Profile.html">Profile</a></li>
-                                    <li><a href="bmi-calculator.html">Bmi calculate</a></li>
+                                    <li><a href="bmi-calculator.php">Bmi calculate</a></li>
                                     <li><a href="Logout.php">Log Out</a></li>
                                 </ul>
                             </li>

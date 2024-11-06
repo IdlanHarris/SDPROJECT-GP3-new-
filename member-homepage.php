@@ -105,7 +105,7 @@ if (!isset($_SESSION['user_id'])) {
                             <li class="active"><a href="member-homepage.php">Home</a>
                                 <ul class="dropdown">
                                     <li><a href="Profile.html">Profile</a></li>
-                                    <li><a href="bmi-calculator.html">Bmi calculate</a></li>
+                                    <li><a href="bmi-calculator.php">Bmi calculate</a></li>
                                     <li><a href="Logout.php">Log Out</a></li>
                                 </ul>
                             </li>
