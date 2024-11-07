@@ -227,32 +227,47 @@ try {
                         </thead>
                         <tbody>
                             <?php
+                            $grandTotal = 0; // Initialize grand total
+                            
                             // Check if there are any records for the logged-in user
                             if ($cart) {
-                                // Loop through the workout history and display each entry
+                                // Loop through the cart items and display each entry
                                 foreach ($cart as $cart1) {
+                                    $grandTotal += $cart1['total_price']; // Add each item's total price to grand total
                                     echo "<tr>";
                                     echo "<td>" . htmlspecialchars($cart1['order_id']) . "</td>";
                                     echo "<td>" . htmlspecialchars($cart1['product_name']) . "</td>";
                                     echo "<td>" . htmlspecialchars($cart1['quantity']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($cart1['total_price']) . "</td>";
+                                    echo "<td style='color: white;'>" . htmlspecialchars($cart1['total_price']) . "</td>";
                                     echo "</tr>";
                                 }
                             } else {
                                 // If no records are found, display a message indicating that
-                                echo "<tr><td colspan='3'>No item in cart for this user.</td></tr>";
+                                echo "<tr><td colspan='4'>No item in cart for this user.</td></tr>";
                             }
                             ?>
                         </tbody>
                     </table><br>
-                    <div class="button-container" style="display: flex; justify-content: right;">
-                        <button type="submit" class="primary-btn pricing-btn">Add To Cart</button>
-                    </div>
+                    
+                    <!-- Display Total Amount -->
+                    <div style="text-align: right; color: white; font-size: 1.2em;">
+                        <?php if ($cart) {
+                            echo "Total Amount: RM" . htmlspecialchars($grandTotal);
+                        } ?>
+                    </div><br>
+                    <form action="POST" target="gateway.php">
+                        <input type="hidden" name="total_price" value="<?php $grandTotal ?>">
+                        <div class="button-container" style="display: flex; justify-content: right;">
+                            <button href="gateway.php" type="submit" class="primary-btn pricing-btn">Add To Cart</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
 
     <!-- Cart Sidebar -->
     <div id="cart-sidebar" class="cart-sidebar">
