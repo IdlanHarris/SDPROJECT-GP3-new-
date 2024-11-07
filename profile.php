@@ -49,7 +49,7 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         <a href="editprofile.php"><button class="btn btn-secondary btn-custom">Edit Profile</button></a>
         <a href="changePass.html"><button class="btn btn-primary btn-custom mt-3">Change Password</button></a>
-        <a href=""><button class="btn btn-primary btn-custom mt-3">Purchase History</button></a>
+        <a href="purchase-history.php"><button class="btn btn-primary btn-custom mt-3">Purchase History</button></a>
         <a href="workout-history.php"><button class="btn btn-primary btn-custom mt-3">Workout History</button></a>
         <button class="btn btn-primary btn-custom mt-3" id="home-button">Home</button>
     </div>
