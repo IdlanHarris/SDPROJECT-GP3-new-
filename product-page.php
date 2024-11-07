@@ -175,10 +175,12 @@ if (!isset($_SESSION['user_id'])) {
                             <div class="logo">
                                 <div class="container"></div>
                                 <div class="cart-icon">
-                                    <button type="button" class="toggle-cart">
-                                        <span>Cart</span>
-                                        <span id="cart-count">0</span>
-                                    </button>
+                                    <a href="cart-page.php">
+                                        <button type="button" class="toggle-cart">
+                                            <span>Cart</span>
+                                            <span id="cart-count">0</span>
+                                        </button>
+                                    </a>
                                 </div>
                             </div>                                
                         </div>                             
@@ -189,7 +191,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="col-lg-4 col-sm-6" id="product">
                     <div class="ts-item set-bg" data-setbg="img/product/creatine.jpg">
                         <div class="ts_text">
-                            <h4>Creatine</h4>
+                            <h4>Creatine | RM15</h4>
                             <form action="product-page-request.php" method="POST">
                                 <input type="hidden" name="product" value="Creatine">
                                 <input type="hidden" name="id" value="P_001">
@@ -205,7 +207,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="col-lg-4 col-sm-6">
                     <div class="ts-item set-bg" data-setbg="img/product/protein.jpg">
                         <div class="ts_text">
-                            <h4>Protein Powder</h4>                            
+                            <h4>Protein Powder | RM20</h4>                            
                             <form action="product-page-request.php" method="POST">
                                 <input type="hidden" name="product" value="Protein Powder">
                                 <input type="hidden" name="id" value="P_003">
@@ -221,7 +223,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="col-lg-4 col-sm-6">
                     <div class="ts-item set-bg" data-setbg="img/product/energyDrink.png">
                         <div class="ts_text">
-                            <h4>Energy Drink</h4>                            
+                            <h4>Energy Drink | RM5</h4>                            
                             <form action="product-page-request.php" method="POST">
                                 <input type="hidden" name="product" value="Energy Drink">
                                 <input type="hidden" name="id" value="P_004">
@@ -237,9 +239,9 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="col-lg-4 col-sm-6">
                     <div class="ts-item set-bg" data-setbg="img/product/belt.jpg">
                         <div class="ts_text">
-                            <h4>Gym Belt</h4>
+                            <h4>Belt | RM25</h4>
                             <form action="product-page-request.php" method="POST">
-                                <input type="hidden" name="product" value="Gym Belt">
+                                <input type="hidden" name="product" value="Belt">
                                 <input type="hidden" name="id" value="P_002">
                                 <input type="hidden" name="price" value="25.00">
                                 <input type="number" name="quantity" min="1" value="1" class="quantity-input">
@@ -253,7 +255,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="col-lg-4 col-sm-6">
                     <div class="ts-item set-bg" data-setbg="img/product/shaker.jpg">
                         <div class="ts_text">
-                            <h4>Shaker</h4>
+                            <h4>Shaker | RM7</h4>
                             <form action="product-page-request.php" method="POST">
                                 <input type="hidden" name="product" value="Shaker">
                                 <input type="hidden" name="id" value="P_005">
@@ -269,7 +271,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="col-lg-4 col-sm-6">
                     <div class="ts-item set-bg" data-setbg="img/product/straps.jpg">
                         <div class="ts_text">
-                            <h4>Straps</h4>
+                            <h4>Straps | RM12</h4>
                             <form action="product-page-request.php" method="POST">
                                 <input type="hidden" name="product" value="Straps">
                                 <input type="hidden" name="id" value="P_006">
@@ -286,12 +288,6 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </section>
     <!-- Product Section End -->
-
-
-
-
-
-
 
     <!-- Cart Sidebar -->
     <div id="cart-sidebar" class="cart-sidebar">
