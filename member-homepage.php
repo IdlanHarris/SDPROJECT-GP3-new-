@@ -479,7 +479,7 @@ if (!isset($_SESSION['user_id'])) {
                             <span>Our Product</span>
                             <h2>BUY WITH US</h2> 
                         </div>                        
-                        <a href="product-page.php" class="primary-btn btn-normal appoinment-btn">MORE DETAILS</a>                         
+                        <a href="product-page.php" class="primary-btn btn-normal appointment-btn">MORE DETAILS</a>                         
                     </div>
                 </div>
             </div>
@@ -543,7 +543,7 @@ if (!isset($_SESSION['user_id'])) {
                             <span>Our Team</span>
                             <h2>TRAIN WITH EXPERTS</h2>                            
                         </div>
-                        <a href="team.html" class="primary-btn btn-normal appoinment-btn">MORE DETAILS </a>   
+                        <a href="team.html" class="primary-btn btn-normal appointment-btn">MORE DETAILS </a>   
                     </div>
                 </div>
             </div>
@@ -705,8 +705,8 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="copyright-text">
                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             © 2024 Bronco Gym Fitness. All rights reserved. <br>
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                     </div>
                 </div>
             </div>
