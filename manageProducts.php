@@ -1,4 +1,5 @@
 <?php
+
 require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php'; // Autoload dependencies
 use App\Database;
 
@@ -28,15 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id'])) {
     $statement->bindParam(':product_id', $productId);
 
     if ($statement->execute()) {
-        if ($statement->rowCount() > 0) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'No product found with this ID.']);
-        }
+        echo json_encode(['success' => true]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Error: Could not remove the product.']);
     }
-    exit(); // Exit after processing AJAX request
+    exit();
 }
 
 // Handle product editing when the 'edit_id' parameter is sent via AJAX
@@ -46,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
     $price = $_POST['price'];
     $stockQuantity = $_POST['stock_quantity'];
 
-    // Update the product information in the database
+    // Update the product's information in the database
     $query = "UPDATE products SET product_name = :product_name, price = :price, stock_quantity = :stock_quantity WHERE product_id = :product_id";
     $statement = $connection->prepare($query);
     $statement->bindParam(':product_name', $productName);
@@ -59,17 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
     } else {
         echo json_encode(['success' => false, 'message' => 'Error: Could not update the product information.']);
     }
-    exit(); // Exit after processing AJAX request
+    exit();
 }
 
-// Fetch all products in ascending order by product_id
-$query = "SELECT product_id, product_name, price, stock_quantity FROM products ORDER BY product_id ASC";
+// Fetch all products
+$query = "SELECT product_id, product_name, price, stock_quantity FROM products";
 $result = $connection->query($query);
-
 ?>
-
-<!--//////////////////////////////////////////////////////////////////////////////-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,32 +75,10 @@ $result = $connection->query($query);
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar" id="mySidebar">
-  <h2>Admin</h2>
-  <ul class="nav nav-pills nav-stacked">
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="adminDashboard.php#section1">Membership List</a></li>
-    <li><a href="adminDashboard.php#section2">Manage Staff</a></li>
-    <li><a href="adminDashboard.php#section3">Manage Member</a></li>
-    <li><a href="adminDashboard.php#section4">Products Information</a></li>
-    <li><a href="customer-orders.php">Customer Orders</a></li>
-    <li><a href="reviewfeedback.php">Review Feedback</a></li>
-    <li><a href="LogOut.php">Logout</a></li>
-  </ul>
-</div>
-
-
-<!-- Main Content -->
-<div class="content">
-
-<!-- Manage Products Content -->
-<div id="section4" class="well">
+<div class="container">
   <h2>Manage Products</h2>
-
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -120,7 +91,6 @@ $result = $connection->query($query);
     </thead>
     <tbody id="productTableBody">
       <?php
-      // Check if there are any products and display them
       if ($result && $result->rowCount() > 0) {
           while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
               echo "<tr data-product-id='" . htmlspecialchars($row['product_id']) . "'>";
@@ -167,90 +137,84 @@ $result = $connection->query($query);
       </div>
     </div>
   </div>
-
 </div>
 
-<!--//////////////////////////////////////////////////////////////////////////////-->
+<script>
+// Handle "Edit" button click
+$(document).on('click', '.edit-btn', function() {
+    const row = $(this).closest('tr');
+    $('#editProductId').val(row.data('product-id'));
+    $('#editProductName').val(row.find('.product-name').text());
+    $('#editPrice').val(row.find('.price').text());
+    $('#editStockQuantity').val(row.find('.stock-quantity').text());
+    $('#editProductModal').modal('show');
+});
 
-  <script>
-    $(document).ready(function() {
-      // Handle the removal of a product
-      $(document).on('click', '.remove-btn', function() {
-        const row = $(this).closest('tr');
-        const productId = row.data('product-id');
+// Handle form submission for editing a product
+$('#editProductForm').on('submit', function(e) {
+    e.preventDefault();
 
-        // Display confirmation dialog
-        const confirmation = confirm("Are you sure you want to remove this product?");
+    const productId = $('#editProductId').val();
+    const productName = $('#editProductName').val();
+    const price = $('#editPrice').val();
+    const stockQuantity = $('#editStockQuantity').val();
 
-        if (confirmation) {
-          $.post('', { remove_id: productId })
-          .done(function(response) {
-            const data = JSON.parse(response);
-            if (data.success) {
-              row.remove(); // Remove the product row if deletion is successful
+    $.ajax({
+        type: 'POST',
+        url: 'manageProducts.php',
+        data: {
+            edit_id: productId,
+            product_name: productName,
+            price: price,
+            stock_quantity: stockQuantity
+        },
+        success: function(response) {
+            const result = JSON.parse(response);
+            if (result.success) {
+                alert('Product updated successfully.');
+                $('#editProductModal').modal('hide');
+
+                // Dynamically update the row in the table
+                const row = $(`tr[data-product-id="${productId}"]`);
+                row.find('.product-name').text(productName);
+                row.find('.price').text(price);
+                row.find('.stock-quantity').text(stockQuantity);
             } else {
-              alert('Error: ' + data.message); // Display error message
+                alert(result.message);
             }
-          })
-          .fail(function(xhr, status, error) {
-            console.error('Error:', status, error);
-            alert('Error occurred: ' + xhr.responseText);
-          });
+        },
+        error: function() {
+            alert('An error occurred while updating the product.');
         }
-        // If the user cancels, do nothing and just return.
-      });
-
-      // Handle the editing of a product
-      $(document).on('click', '.edit-btn', function() {
-        const row = $(this).closest('tr');
-        const productId = row.data('product-id');
-        const productName = row.find('.product-name').text();
-        const price = row.find('.price').text();
-        const stockQuantity = row.find('.stock-quantity').text();
-
-        // Set the values in the edit modal
-        $('#editProductId').val(productId);
-        $('#editProductName').val(productName);
-        $('#editPrice').val(price);
-        $('#editStockQuantity').val(stockQuantity);
-
-        $('#editProductModal').modal('show'); // Show the edit modal
-      });
-
-      // Handle the submission of the edit form
-      $('#editProductForm').on('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        const productId = $('#editProductId').val();
-        const productName = $('#editProductName').val();
-        const price = $('#editPrice').val();
-        const stockQuantity = $('#editStockQuantity').val();
-
-        $.post('', {
-          edit_id: productId,
-          product_name: productName,
-          price: price,
-          stock_quantity: stockQuantity
-        })
-        .done(function(response) {
-          const data = JSON.parse(response);
-          if (data.success) {
-            // Update the row with new values
-            const row = $(`tr[data-product-id='${productId}']`);
-            row.find('.product-name').text(productName);
-            row.find('.price').text(price);
-            row.find('.stock-quantity').text(stockQuantity);
-            $('#editProductModal').modal('hide'); // Hide the modal
-          } else {
-            alert('Error: ' + data.message); // Display error message
-          }
-        })
-        .fail(function(xhr, status, error) {
-          console.error('Error:', status, error);
-          alert('Error occurred: ' + xhr.responseText);
-        });
-      });
     });
-  </script>
+});
+
+// Handle "Remove" button click
+$(document).on('click', '.remove-btn', function() {
+    const row = $(this).closest('tr');
+    const productId = row.data('product-id');
+
+    if (confirm('Are you sure you want to remove this product?')) {
+        $.ajax({
+            type: 'POST',
+            url: 'manageProducts.php',
+            data: { remove_id: productId },
+            success: function(response) {
+                const result = JSON.parse(response);
+                if (result.success) {
+                    alert('Product removed successfully.');
+                    row.remove();
+                } else {
+                    alert(result.message);
+                }
+            },
+            error: function() {
+                alert('An error occurred while removing the product.');
+            }
+        });
+    }
+});
+
+</script>
 </body>
 </html>
