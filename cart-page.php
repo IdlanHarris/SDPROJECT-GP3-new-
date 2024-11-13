@@ -54,23 +54,64 @@ try {
     // Log the error message if a database exception occurs
     echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
 }
+
 // Check if the Buy Now button is clicked
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy_now'])) {
-    $gateway_total = $grandTotal;
-// Delete all items from the cart for the specified user
-$deleteQuery = "DELETE FROM customer_orders WHERE user_id = ?";
-$stmt = $connection->prepare($deleteQuery);
-$stmt->execute([$user_id]); // Use integer type binding for user_id if it's an integer
-// Check if the deletion was successful
-if ($stmt->rowCount() > 0) {  // Check if any rows were affected
-    // Redirect to gateway.php with the grand total as a URL parameter
-    header("Location: gateway.php");
-    exit(); // Ensure no further code is executed after redirect
-} else {
-    echo "Error deleting cart items or no items found to delete.";
+    // Ensure the grandTotal is properly set
+    $gateway_total = isset($grandTotal) ? $grandTotal : 0; // Use a fallback if grandTotal is not set
+
+    // Fetch data from customer_orders
+    try {
+        $stmt = $connection->prepare("SELECT product_id, order_id, quantity, total_price, product_name FROM customer_orders WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        $orders = $stmt->fetchAll(); // Fetch all orders for this user
+
+        if ($orders) {
+            // Begin a transaction to handle both inserting and deleting atomically
+            $connection->beginTransaction();
+
+            // Loop through orders and insert into purchase_orders table
+            foreach ($orders as $order) {
+                $insertQuery = "INSERT INTO purchase_history (product_id, user_id, order_id, product_name, quantity, total_price) 
+                                VALUES (:product_id, :user_id, :order_id, :product_name, :quantity, :total_price)";
+                $insertStmt = $connection->prepare($insertQuery);
+                $insertStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                $insertStmt->bindParam(':product_id', $order['product_id'], PDO::PARAM_STR);
+                $insertStmt->bindParam(':order_id', $order['order_id'], PDO::PARAM_INT);
+                $insertStmt->bindParam(':product_name', $order['product_name'], PDO::PARAM_STR);
+                $insertStmt->bindParam(':quantity', $order['quantity'], PDO::PARAM_INT);
+                $insertStmt->bindParam(':total_price', $order['total_price'], PDO::PARAM_STR); // Ensure total_price is a string or decimal value
+                $insertStmt->execute();
+            }
+
+            // Now, delete all items from the customer_orders for the specified user
+            $deleteQuery = "DELETE FROM customer_orders WHERE user_id = ?";
+            $deleteStmt = $connection->prepare($deleteQuery);
+            $deleteStmt->execute([$user_id]); // Use integer type binding for user_id if it's an integer
+
+            // Check if the deletion was successful
+            if ($deleteStmt->rowCount() > 0) {
+                // Commit the transaction if everything went fine
+                $connection->commit();
+
+                // Redirect to gateway.php with the grand total as a URL parameter
+                header("Location: gateway.php?total_price=" . urlencode($gateway_total));
+                exit(); // Ensure no further code is executed after redirect
+            } else {
+                // Rollback the transaction if deletion fails
+                $connection->rollBack();
+                echo "Error deleting cart items or no items found to delete.";
+            }
+        } else {
+            echo "No orders found to process.";
+        }
+    } catch (PDOException $e) {
+        // Rollback in case of any errors
+        $connection->rollBack();
+        echo "Error: " . $e->getMessage();
+    }
 }
-$stmt->close();
-}
+
 ?>
 
 

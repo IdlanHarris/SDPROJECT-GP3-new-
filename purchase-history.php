@@ -228,13 +228,13 @@ $purchaseHistory = $statement->fetchAll(PDO::FETCH_ASSOC);
                                                 data-product-name="<?= htmlspecialchars($purchase['product_name']) ?>" 
                                                 data-quantity="<?= htmlspecialchars($purchase['quantity']) ?>" 
                                                 data-total-price="<?= htmlspecialchars(number_format($purchase['total_price'], 2)) ?>">
-                                          Print
+                                        Print
                                         </button>
-                                      </td>
+                                        </td>
                                     </tr>
-                                  <?php endforeach; ?>
+                                    <?php endforeach; ?>
                                 <?php else: ?>
-                                  <tr><td colspan="5">No purchase history available.</td></tr>
+                                    <tr><td colspan="5">No purchase history available.</td></tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
