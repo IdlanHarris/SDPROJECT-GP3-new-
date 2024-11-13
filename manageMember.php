@@ -93,6 +93,8 @@ $query = "SELECT user_id, username, email, phone_number FROM users WHERE user_ty
 $result = $connection->query($query);
 ?>
 
+<!--//////////////////////////////////////////////////////////////////////////////-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,72 +109,91 @@ $result = $connection->query($query);
 </head>
 <body>
 
-<!-- Manage Member Content -->
-<div class="container">
-  <h2>Manage Member</h2>
- 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="memberTableBody">
-      <?php
-      // Check if there are any members and display them
-      if ($result && $result->rowCount() > 0) {
-          while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-              echo "<tr data-user-id='" . htmlspecialchars($row['user_id']) . "'>";
-              echo "<td>" . htmlspecialchars($row['user_id']) . "</td>";
-              echo "<td class='username'>" . htmlspecialchars($row['username']) . "</td>";
-              echo "<td class='email'>" . htmlspecialchars($row['email']) . "</td>";
-              echo "<td class='phone-number'>" . htmlspecialchars($row['phone_number']) . "</td>";
-              echo "<td><button class='btn btn-danger remove-btn'>Delete</button> <button class='btn btn-primary edit-btn'>Edit</button></td>";
-              echo "</tr>";
-          }
-      } else {
-          echo "<tr><td colspan='5'>No members found.</td></tr>";
-      }
-      ?>
-    </tbody>
-  </table>
+<!-- Sidebar -->
+<div class="sidebar" id="mySidebar">
+  <h2>Admin</h2>
+  <ul class="nav nav-pills nav-stacked">
+    <li><a href="profile.php">Profile</a></li>
+    <li><a href="adminDashboard.php#section1">Membership List</a></li>
+    <li><a href="adminDashboard.php#section2">Manage Staff</a></li>
+    <li><a href="adminDashboard.php#section3">Manage Member</a></li>
+    <li><a href="adminDashboard.php#section4">Products Information</a></li>
+    <li><a href="customer-orders.php">Customer Orders</a></li>
+    <li><a href="review-feedback.php">Review Feedback</a></li>
+    <li><a href="Logout.php">Logout</a></li>
+  </ul>
+</div>
 
+<!-- Main Content -->
+<div class="content">
 
-  <!-- Edit Member Modal -->
-  <div id="editMemberModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Member Information</h4>
-        </div>
-        <div class="modal-body">
-          <form id="editMemberForm">
-            <input type="hidden" id="editMemberId">
-            <div class="form-group">
-              <label for="editUsername">Username:</label>
-              <input type="text" class="form-control" id="editUsername" required>
-            </div>
-            <div class="form-group">
-              <label for="editEmail">Email:</label>
-              <input type="email" class="form-control" id="editEmail" required>
-            </div>
-            <div class="form-group">
-              <label for="editPhoneNumber">Phone Number:</label>
-              <input type="text" class="form-control" id="editPhoneNumber" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </form>
+  <!-- Manage Member Content -->
+  <div id="manage" class="well">
+    <h2>Manage Member</h2>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="memberTableBody">
+        <?php
+        // Check if there are any members and display them
+        if ($result && $result->rowCount() > 0) {
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr data-user-id='" . htmlspecialchars($row['user_id']) . "'>";
+                echo "<td>" . htmlspecialchars($row['user_id']) . "</td>";
+                echo "<td class='username'>" . htmlspecialchars($row['username']) . "</td>";
+                echo "<td class='email'>" . htmlspecialchars($row['email']) . "</td>";
+                echo "<td class='phone-number'>" . htmlspecialchars($row['phone_number']) . "</td>";
+                echo "<td><button class='btn btn-danger remove-btn'>Delete</button> <button class='btn btn-primary edit-btn'>Edit</button></td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='5'>No members found.</td></tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+
+    <!-- Edit Member Modal -->
+    <div id="editMemberModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Member Information</h4>
+          </div>
+          <div class="modal-body">
+            <form id="editMemberForm">
+              <input type="hidden" id="editMemberId">
+              <div class="form-group">
+                <label for="editUsername">Username:</label>
+                <input type="text" class="form-control" id="editUsername" required>
+              </div>
+              <div class="form-group">
+                <label for="editEmail">Email:</label>
+                <input type="email" class="form-control" id="editEmail" required>
+              </div>
+              <div class="form-group">
+                <label for="editPhoneNumber">Phone Number:</label>
+                <input type="text" class="form-control" id="editPhoneNumber" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
- 
+<!--//////////////////////////////////////////////////////////////////////////////-->
 
 <!-- JavaScript to handle functionality -->
 <script>

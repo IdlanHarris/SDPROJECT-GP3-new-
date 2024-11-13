@@ -1,13 +1,31 @@
 <?php
-session_start(); // Start the session
-
-// Check if the user is logged in
+session_start();
 if (!isset($_SESSION['user_id'])) {
-    // If not logged in, redirect to the login page
     header("Location: member-homepage.php");
     exit();
 }
+
+require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php';
+use App\Database;
+
+$database = new Database();
+$connection = $database->connect();
+$user_id = $_SESSION['user_id'];
+
+if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
+    header('Content-Type: application/json');
+    try {
+        $stmt = $connection->prepare("SELECT COUNT(order_id) AS order_count FROM customer_orders WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode(['success' => true, 'order_count' => $result['order_count']]);
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+    exit;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -163,6 +181,20 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Breadcrumb Section End -->
 
 
+    <script>
+        function updateCartCount() {
+            fetch('product-page.php?ajax=true')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('cart-count').innerText = data.order_count;
+                    }
+                })
+                .catch(error => console.error('Error fetching cart count:', error));
+        }
+        document.addEventListener('DOMContentLoaded', updateCartCount);
+    </script>
+
     <!-- Product Section Begin -->
     <section class="team-section team-page spad">
         <div class="container">
@@ -289,19 +321,6 @@ if (!isset($_SESSION['user_id'])) {
     </section>
     <!-- Product Section End -->
 
-    <!-- Cart Sidebar -->
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Your Cart</h3>
-            <button onclick="toggleCart()">Close</button>
-        </div>
-        <div id="cart-items" class="cart-items"></div>
-        <div class="cart-total">
-            <span>Total: RM</span><span id="cart-total">0.00</span>
-        </div>
-        <button class="checkout-btn" id="paypal-button-container"></button>
-    </div>
-
     <!-- Get In Touch Section Begin -->
     <div class="gettouch-section">
         <div class="container">
@@ -409,17 +428,6 @@ if (!isset($_SESSION['user_id'])) {
     </section>
     <!-- Footer Section End -->
 
-    <!-- Search model Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search model end -->
-
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -430,8 +438,6 @@ if (!isset($_SESSION['user_id'])) {
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
-<!-- Javascript -->
-    <script src="product-page.js"></script>
 </body>
 
 </html>

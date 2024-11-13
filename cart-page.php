@@ -1,16 +1,78 @@
 <?php
 session_start(); // Start the session
-
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // If not logged in, redirect to the login page
     header("Location: member-homepage.php");
     exit();
 }
+// Include your database connection file
+require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php';
+use App\Database;
+// Create a new instance of the Database class and establish a connection
+$database = new Database();
+$connection = $database->connect();
+$user_id = $_SESSION['user_id']; // Get user_id from session
+
+// Handle deletion if a POST request is made with 'order_id' set
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
+    $order_id = $_POST['order_id'];
+    try {
+        // Prepare and execute the delete query
+        $stmt = $connection->prepare("DELETE FROM customer_orders WHERE order_id = ? AND user_id = ?");
+        $result = $stmt->execute([$order_id, $user_id]);
+        if ($result) {
+            // Redirect back to the cart page with a success message
+            header("Location: cart-page.php#cart-table");
+            exit();
+        } else {
+            // Log the detailed error information if deletion fails
+            $errorInfo = $stmt->errorInfo();
+            echo json_encode(['success' => false, 'message' => 'Failed to delete item', 'error' => $errorInfo]);
+            exit();
+        }
+    } catch (PDOException $e) {
+        // Log the error message if a database exception occurs
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+        exit();
+    }
+} 
+// Fetch cart items if no delete action is detected
+try {
+    // Fetch cart items for the logged-in user
+    $stmt = $connection->prepare("SELECT order_id, quantity, total_price, product_name FROM customer_orders WHERE user_id = ?");
+    $result = $stmt->execute([$user_id]);
+    if ($result) {
+        // Fetch all the results for the logged-in user
+        $cart = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        // Log the detailed error information if query fails
+        $errorInfo = $stmt->errorInfo();
+        echo json_encode(['success' => false, 'message' => 'Query execution failed', 'error' => $errorInfo]);
+    }
+} catch (PDOException $e) {
+    // Log the error message if a database exception occurs
+    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+}
+// Check if the Buy Now button is clicked
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy_now'])) {
+    $gateway_total = $grandTotal;
+// Delete all items from the cart for the specified user
+$deleteQuery = "DELETE FROM customer_orders WHERE user_id = ?";
+$stmt = $connection->prepare($deleteQuery);
+$stmt->execute([$user_id]); // Use integer type binding for user_id if it's an integer
+// Check if the deletion was successful
+if ($stmt->rowCount() > 0) {  // Check if any rows were affected
+    // Redirect to gateway.php with the grand total as a URL parameter
+    header("Location: gateway.php");
+    exit(); // Ensure no further code is executed after redirect
+} else {
+    echo "Error deleting cart items or no items found to delete.";
+}
+$stmt->close();
+}
 ?>
 
-<!DOCTYPE html>
-<html lang="zxx">
 
 <head> 
     <meta charset="UTF-8">
@@ -163,124 +225,80 @@ if (!isset($_SESSION['user_id'])) {
     </section>
     <!-- Breadcrumb Section End -->
 
-    
-<?php
-// Include your database connection file
-require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php';
-use App\Database;
+    <!-- HTML Structure -->
+    <section class="bmi-calculator-section spad">
+        <div class="container" id="cart-table">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title chart-title">
+                        <span>Your Shopping Cart</span>
+                        <h2>CART</h2>
+                    </div>
+                    <div class="chart-table" >
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th> <!-- New column for delete action -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $grandTotal = 0; // Initialize grand total
+                                
+                                // Check if there are any records for the logged-in user
+                                if ($cart) {
+                                    // Loop through the cart items and display each entry
+                                    foreach ($cart as $cart1) {
+                                        $grandTotal += $cart1['total_price']; // Add each item's total price to grand total
+                                        $_SESSION['grand-total'] = $grandTotal;
+                                        echo "<tr>";
+                                        echo "<td>" . htmlspecialchars($cart1['order_id']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($cart1['product_name']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($cart1['quantity']) . "</td>";
+                                        echo "<td style='color: white;'>" . htmlspecialchars($cart1['total_price']) . "</td>";
+                                        
+                                        // Delete button for each item
+                                        echo "<td>";
+                                        echo "<form action='cart-page.php' method='POST'>";
+                                        echo "<input type='hidden' name='order_id' value='" . htmlspecialchars($cart1['order_id']) . "'>";
+                                        echo "<button type='submit' class='delete-btn'>X</button>";
+                                        echo "</form>";
+                                        echo "</td>";
 
-// Create a new instance of the Database class and establish a connection
-$database = new Database();
-$connection = $database->connect();
-
-// Check if the user is logged in, if not, display an error message
-if (!isset($_SESSION['user_id'])) {
-    die("You must be logged in to view your workout history.");
-}
-
-$user_id = $_SESSION['user_id']; // Get user_id from session
-
-try {
-    // Check if user_id exists and is valid
-    if (empty($user_id)) {
-        echo json_encode(['success' => false, 'message' => 'User not logged in']);
-        exit;
-    }
-
-
-    // Fetch class, class_date, and workout_id for the logged-in user
-    $stmt = $connection->prepare("SELECT order_id, quantity, total_price, product_name FROM customer_orders WHERE user_id = ?");
-    $result = $stmt->execute([$user_id]);
-
-    if ($result) {
-        // Fetch all the results for the logged-in user
-        $cart = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        // Log the detailed error information if query fails
-        $errorInfo = $stmt->errorInfo(); // Get error details from the PDO statement
-        echo json_encode(['success' => false, 'message' => 'Query execution failed', 'error' => $errorInfo]);
-    }
-} catch (PDOException $e) {
-    // Log the error message if a database exception occurs
-    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-}
-?>
-
-<!-- HTML Structure -->
-<section class="bmi-calculator-section spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title chart-title">
-                    <span>Your Shopping Cart</span>
-                    <h2>CART</h2>
-                </div>
-                <div class="chart-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $grandTotal = 0; // Initialize grand total
-                            
-                            // Check if there are any records for the logged-in user
-                            if ($cart) {
-                                // Loop through the cart items and display each entry
-                                foreach ($cart as $cart1) {
-                                    $grandTotal += $cart1['total_price']; // Add each item's total price to grand total
-                                    echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($cart1['order_id']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($cart1['product_name']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($cart1['quantity']) . "</td>";
-                                    echo "<td style='color: white;'>" . htmlspecialchars($cart1['total_price']) . "</td>";
-                                    echo "</tr>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    // If no records are found, display a message indicating that
+                                    echo "<tr><td colspan='5'>No item in cart for this user.</td></tr>";
                                 }
-                            } else {
-                                // If no records are found, display a message indicating that
-                                echo "<tr><td colspan='4'>No item in cart for this user.</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table><br>
-                    
-                    <!-- Display Total Amount -->
-                    <div style="text-align: right; color: white; font-size: 1.2em;">
-                        <?php if ($cart) {
-                            echo "Total Amount: RM" . htmlspecialchars($grandTotal);
-                        } ?>
-                    </div><br>
-                    <form action="POST" target="gateway.php">
-                        <input type="hidden" name="total_price" value="<?php $grandTotal ?>">
-                        <div class="button-container" style="display: flex; justify-content: right;">
-                            <button href="gateway.php" type="submit" class="primary-btn pricing-btn">Add To Cart</button>
-                        </div>
-                    </form>
+                                ?>
+                            </tbody>
+                        </table><br>
+                        
+                        <!-- Display Total Amount -->
+                        <div style="text-align: right; color: white; font-size: 1.2em;">
+                            <?php if ($cart) {
+                                echo "Total Amount: RM" . htmlspecialchars($grandTotal);
+                            } ?>
+                        </div><br>
+                        
+                        <!-- Buy Now Button -->
+                        <form action="cart-page.php" method="POST">
+                            <input type="hidden" name="total_price" value="<?php echo htmlspecialchars($grandTotal); ?>">
+                            <div class="button-container" style="display: flex; justify-content: right;">
+                                <button type="submit" name="buy_now" class="primary-btn pricing-btn">Buy Now</button>
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-
-
-    <!-- Cart Sidebar -->
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Your Cart</h3>
-            <button onclick="toggleCart()">Close</button>
-        </div>
-        <div id="cart-items" class="cart-items"></div>
-        <div class="cart-total">
-            <span>Total: RM</span><span id="cart-total">0.00</span>
-        </div>
-        <button class="checkout-btn" id="paypal-button-container"></button>
-    </div>
+    </section>
 
     <!-- Get In Touch Section Begin -->
     <div class="gettouch-section">
@@ -380,8 +398,9 @@ try {
                     <div class="copyright-text">
                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             © 2024 Bronco Gym Fitness. All rights reserved. <br>
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with 
+    <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                     </div>
                 </div>
             </div>
@@ -410,8 +429,21 @@ try {
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
-<!-- Javascript -->
-    <script src="product-page.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check if the URL has a message parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('message')) {
+                // Scroll to the cart-table section if the message exists
+                const cartTable = document.getElementById("cart-table");
+                    if (cartTable) {
+                        cartTable.scrollIntoView({ behavior: "smooth" });
+                    }
+            }
+        });
+    </script>
+
+
 </body>
 
 </html>

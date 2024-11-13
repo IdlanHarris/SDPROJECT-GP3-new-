@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_SESSION['user_id']) && isset($_POST['plan'])) {
         $user_id = $_SESSION['user_id'];
         $membership_plan = $_POST['plan'];
+        $_SESSION['grand-total'] = $_POST['price'];
 
         // Prepare the SQL statement
         $stmt = $connection->prepare("UPDATE users SET membership = ? WHERE user_id = ?");
@@ -26,6 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Execute the query
         if ($stmt->execute([$membership_plan, $user_id])) {
             echo json_encode(['success' => true, 'message' => 'Membership status updated successfully.']);
+            header("Location: gateway.php");
+            exit();
         } else {
             echo json_encode(['success' => false, 'message' => 'Error: Could not update membership status.']);
         }
@@ -37,6 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => false, 'message' => 'Error: Invalid request method.']);
 }
 
-// exit(); // Exit after processing the request
+exit(); // Exit after processing the request
 ?>
 

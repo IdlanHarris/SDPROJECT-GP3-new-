@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $connection->prepare("UPDATE products SET stock_quantity = ? WHERE product_id = ?");
         $stmt->execute([$updated_stock, $product_id]);
 
-        header("Location: /product-page.php#product");
+        header("Location: ./product-page.php#product");
 
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);

@@ -4,7 +4,7 @@ session_start(); // Start the session
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // If not logged in, redirect to the login page
-    header("Location: index.html");
+    header("Location: /");
     exit();
 }
 ?>
@@ -47,7 +47,7 @@ if (!isset($_SESSION['user_id'])) {
             <label class="form-label"><strong>Membership Status:</strong></label>
             <p id="view-status">Loading...</p>
         </div>
-        <a href="editprofile.php"><button class="btn btn-secondary btn-custom">Edit Profile</button></a>
+        <a href="editProfile.html"><button class="btn btn-secondary btn-custom">Edit Profile</button></a>
         <a href="changePass.html"><button class="btn btn-primary btn-custom mt-3">Change Password</button></a>
         <a href="purchase-history.php"><button class="btn btn-primary btn-custom mt-3">Purchase History</button></a>
         <a href="workout-history.php"><button class="btn btn-primary btn-custom mt-3">Workout History</button></a>
@@ -101,7 +101,7 @@ if (!isset($_SESSION['user_id'])) {
                             window.location.href = 'staffDashboard.php';
                             break;
                         case 'M':
-                            window.location.href = 'member-Homepage.php';
+                            window.location.href = 'member-homepage.php';
                             break;
                         default:
                             alert('Role not recognized');

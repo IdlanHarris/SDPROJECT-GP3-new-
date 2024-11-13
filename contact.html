@@ -139,7 +139,7 @@
                     <div class="breadcrumb-text">
                         <h2>Contact Us</h2>
                         <div class="bt-option">
-                            <a href="./index.html">Home</a>
+                            <a href="./member-homepage.php">Home</a>
                             <a href="#">Pages</a>
                             <span>Contact us</span>
                         </div>
@@ -180,12 +180,14 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
+                    <div class="section-title contact-title">
+                        <span>Feedback</span>
+                        <h2>EXPRESS YOUR SATISFACTION</h2>
+                    </div>
                     <div class="leave-comment">
-                        <form action="#">
-                            <input type="text" placeholder="Name">
-                            <input type="text" placeholder="Email">
-                            <input type="text" placeholder="Website">
-                            <textarea placeholder="Comment"></textarea>
+                        <form action="contact.php" method="POST">
+                            <input type="number" max="5" min="1" placeholder="Rate (1-5)" name="rate">
+                            <input type="text" placeholder="Comment" name="comment">
                             <button type="submit">Submit</button>
                         </form>
                     </div>

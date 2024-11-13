@@ -61,8 +61,8 @@ try {
         <li><a href="adminDashboard.php#section3">Manage Member</a></li>
         <li><a href="adminDashboard.php#section4">Products Information</a></li>
         <li><a href="adminDashboard.php#section5">Customer Orders</a></li>
-        <li><a href="reviewfeedback.php">Review Feedback</a></li>
-        <li><a href="LogOut.php">Logout</a></li>
+        <li><a href="review-feedback.php">Review Feedback</a></li>
+        <li><a href="Logout.php">Logout</a></li>
     </ul>
     </div>
 

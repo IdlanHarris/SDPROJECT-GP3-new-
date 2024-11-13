@@ -36,38 +36,38 @@ $orderResult = $connection->query($orderQuery);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Customer Orders</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="adminDashboard.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>Customer Orders</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="adminDashboard.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <!-- Sidebar -->
 <div class="sidebar" id="mySidebar">
-  <h2>Admin</h2>
-  <ul class="nav nav-pills nav-stacked">
+<h2>Admin</h2>
+<ul class="nav nav-pills nav-stacked">
     <li><a href="profile.php">Profile</a></li>
     <li><a href="adminDashboard.php#section1">Membership List</a></li>
     <li><a href="adminDashboard.php#section2">Manage Staff</a></li>
     <li><a href="adminDashboard.php#section3">Manage Member</a></li>
     <li><a href="adminDashboard.php#section4">Products Information</a></li>
     <li><a href="adminDashboard.php#section5">Customer Orders</a></li>
-    <li><a href="reviewfeedback.php">Review Feedback</a></li>
-    <li><a href="LogOut.php">Logout</a></li>
-  </ul>
+    <li><a href="review-feedback.php">Review Feedback</a></li>
+    <li><a href="Logout.php">Logout</a></li>
+</ul>
 </div>
 
 <!-- Main Content -->
 <div class="content">
- <!-- Customer Orders Section -->
+<!-- Customer Orders Section -->
 <div id="section5" class="well">
     <h4>Customer Orders</h4>
     <table class="table table-bordered">

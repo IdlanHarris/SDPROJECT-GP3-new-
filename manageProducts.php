@@ -68,7 +68,12 @@ $result = $connection->query($query);
 
 ?>
 
+
+
 <!--//////////////////////////////////////////////////////////////////////////////-->
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,8 +100,8 @@ $result = $connection->query($query);
     <li><a href="adminDashboard.php#section3">Manage Member</a></li>
     <li><a href="adminDashboard.php#section4">Products Information</a></li>
     <li><a href="customer-orders.php">Customer Orders</a></li>
-    <li><a href="reviewfeedback.php">Review Feedback</a></li>
-    <li><a href="LogOut.php">Logout</a></li>
+    <li><a href="review-feedback.php">Review Feedback</a></li>
+    <li><a href="Logout.php">Logout</a></li>
   </ul>
 </div>
 
@@ -104,73 +109,78 @@ $result = $connection->query($query);
 <!-- Main Content -->
 <div class="content">
 
-<!-- Manage Products Content -->
-<div id="section4" class="well">
-  <h2>Manage Products</h2>
+  <!-- Manage Products Content -->
+  <div id="section4" class="well">
+    <h2>Manage Products</h2>
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Product ID</th>
-        <th>Product Name</th>
-        <th>Price</th>
-        <th>Stock Quantity</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="productTableBody">
-      <?php
-      // Check if there are any products and display them
-      if ($result && $result->rowCount() > 0) {
-          while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-              echo "<tr data-product-id='" . htmlspecialchars($row['product_id']) . "'>";
-              echo "<td>" . htmlspecialchars($row['product_id']) . "</td>";
-              echo "<td class='product-name'>" . htmlspecialchars($row['product_name']) . "</td>";
-              echo "<td class='price'>" . htmlspecialchars($row['price']) . "</td>";
-              echo "<td class='stock-quantity'>" . htmlspecialchars($row['stock_quantity']) . "</td>";
-              echo "<td><button class='btn btn-danger remove-btn'>Delete</button> <button class='btn btn-primary edit-btn'>Edit</button></td>";
-              echo "</tr>";
-          }
-      } else {
-          echo "<tr><td colspan='5'>No products found.</td></tr>";
-      }
-      ?>
-    </tbody>
-  </table>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Stock Quantity</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="productTableBody">
+        <?php
+        // Check if there are any products and display them
+        if ($result && $result->rowCount() > 0) {
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr data-product-id='" . htmlspecialchars($row['product_id']) . "'>";
+                echo "<td>" . htmlspecialchars($row['product_id']) . "</td>";
+                echo "<td class='product-name'>" . htmlspecialchars($row['product_name']) . "</td>";
+                echo "<td class='price'>" . htmlspecialchars($row['price']) . "</td>";
+                echo "<td class='stock-quantity'>" . htmlspecialchars($row['stock_quantity']) . "</td>";
+                echo "<td><button class='btn btn-danger remove-btn'>Delete</button> <button class='btn btn-primary edit-btn'>Edit</button></td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='5'>No products found.</td></tr>";
+        }
+        ?>
+      </tbody>
+    </table>
 
-  <!-- Edit Product Modal -->
-  <div id="editProductModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Product Information</h4>
-        </div>
-        <div class="modal-body">
-          <form id="editProductForm">
-            <input type="hidden" id="editProductId">
-            <div class="form-group">
-              <label for="editProductName">Product Name:</label>
-              <input type="text" class="form-control" id="editProductName" required>
-            </div>
-            <div class="form-group">
-              <label for="editPrice">Price:</label>
-              <input type="number" class="form-control" id="editPrice" required>
-            </div>
-            <div class="form-group">
-              <label for="editStockQuantity">Stock Quantity:</label>
-              <input type="number" class="form-control" id="editStockQuantity" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </form>
+    <!-- Edit Product Modal -->
+    <div id="editProductModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Product Information</h4>
+          </div>
+          <div class="modal-body">
+            <form id="editProductForm">
+              <input type="hidden" id="editProductId">
+              <div class="form-group">
+                <label for="editProductName">Product Name:</label>
+                <input type="text" class="form-control" id="editProductName" required>
+              </div>
+              <div class="form-group">
+                <label for="editPrice">Price:</label>
+                <input type="number" class="form-control" id="editPrice" required>
+              </div>
+              <div class="form-group">
+                <label for="editStockQuantity">Stock Quantity:</label>
+                <input type="number" class="form-control" id="editStockQuantity" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
 
+
+
 <!--//////////////////////////////////////////////////////////////////////////////-->
+
+
 
   <script>
     $(document).ready(function() {
@@ -252,5 +262,7 @@ $result = $connection->query($query);
       });
     });
   </script>
+
+
 </body>
 </html>

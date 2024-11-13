@@ -4,15 +4,54 @@ session_start(); // Start the session
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     // If not logged in, redirect to the login page
-    header("Location: index.html");
+    header("Location: /");
     exit();
 }
 ?>
 
+<?php
+// Include your database connection file
+require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php';
+use App\Database;
+
+// Create a new instance of the Database class and establish a connection
+$database = new Database();
+$connection = $database->connect();
+
+// Check if the user is logged in, if not, display an error message
+if (!isset($_SESSION['user_id'])) {
+    die("You must be logged in to view your workout history.");
+}
+
+$user_id = $_SESSION['user_id']; // Get user_id from session
+
+try {
+    // Check if user_id exists and is valid
+    if (empty($user_id)) {
+        echo json_encode(['success' => false, 'message' => 'User not logged in']);
+        exit;
+    }
+
+    // Fetch class, class_date, and workout_id for the logged-in user
+    $stmt = $connection->prepare("SELECT workout_id, class, class_date FROM workoutplan_history WHERE user_id = ?");
+    $result = $stmt->execute([$user_id]);
+
+    if ($result) {
+        // Fetch all the results for the logged-in user
+        $workout_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        // Log the detailed error information if query fails
+        $errorInfo = $stmt->errorInfo(); // Get error details from the PDO statement
+        echo json_encode(['success' => false, 'message' => 'Query execution failed', 'error' => $errorInfo]);
+    }
+} catch (PDOException $e) {
+    // Log the error message if a database exception occurs
+    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+}
+?>
 
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Gym Template">
@@ -147,7 +186,7 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="breadcrumb-text">
                         <h2>Workout History</h2>
                         <div class="bt-option">
-                            <a href="member-homepage.php.html">Home</a>
+                            <a href="member-homepage.php">Home</a>
                             <a href="profile.php">Profile</a>
                             <span>Workout History</span>
                         </div>
@@ -158,48 +197,6 @@ if (!isset($_SESSION['user_id'])) {
     </section>
     <!-- Breadcrumb Section End -->
 
-<?php
-// Include your database connection file
-require __DIR__ . '/../SDPROJECT-GP3-new-/vendor/autoload.php';
-use App\Database;
-
-// Create a new instance of the Database class and establish a connection
-$database = new Database();
-$connection = $database->connect();
-
-// Check if the user is logged in, if not, display an error message
-if (!isset($_SESSION['user_id'])) {
-    die("You must be logged in to view your workout history.");
-}
-
-$user_id = $_SESSION['user_id']; // Get user_id from session
-
-try {
-    // Check if user_id exists and is valid
-    if (empty($user_id)) {
-        echo json_encode(['success' => false, 'message' => 'User not logged in']);
-        exit;
-    }
-
-    // Fetch class, class_date, and workout_id for the logged-in user
-    $stmt = $connection->prepare("SELECT workout_id, class, class_date FROM workoutplan_history WHERE user_id = ?");
-    $result = $stmt->execute([$user_id]);
-
-    if ($result) {
-        // Fetch all the results for the logged-in user
-        $workout_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        // Log the detailed error information if query fails
-        $errorInfo = $stmt->errorInfo(); // Get error details from the PDO statement
-        echo json_encode(['success' => false, 'message' => 'Query execution failed', 'error' => $errorInfo]);
-    }
-} catch (PDOException $e) {
-    // Log the error message if a database exception occurs
-    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-}
-?>
-
-<!-- HTML Structure -->
 <section class="bmi-calculator-section spad">
     <div class="container">
         <div class="row">
@@ -241,7 +238,6 @@ try {
         </div>
     </div>
 </section>
-
 
     <!-- Get In Touch Section Begin -->
     <div class="gettouch-section">
@@ -340,8 +336,9 @@ try {
                     <div class="copyright-text">
                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             © 2024 Bronco Gym Fitness. All rights reserved. <br>
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with 
+                            <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                     </div>
                 </div>
             </div>
@@ -373,38 +370,4 @@ try {
 
 
 </body>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector(".chart-calculate-form form");
-        const resultDiv = document.getElementById("bmiResult"); // Get the result div
-
-        form.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            // Get the height and weight values from the input fields
-            const height = parseFloat(form.querySelector('input[placeholder="Height / cm"]').value);
-            const weight = parseFloat(form.querySelector('input[placeholder="Weight / kg"]').value);
-
-            // Check if inputs are valid
-            if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
-                alert("Please enter valid height and weight values.");
-                return;
-            }
-
-            // Convert height from cm to meters
-            const heightInMeters = height / 100;
-
-            // Calculate BMI
-            const bmi = weight / (heightInMeters * heightInMeters);
-            const bmiResult = bmi.toFixed(2); // Round to two decimal places
-
-            // Display the result
-            resultDiv.innerHTML = `Your BMI is: ${bmiResult}`; // Update the result div
-        });
-    });
-</script>
-
-
-
 </html>

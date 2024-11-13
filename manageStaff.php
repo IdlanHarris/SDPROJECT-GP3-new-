@@ -82,8 +82,26 @@ $result = $connection->query($query);
 </head>
 <body>
 
+<!-- Sidebar -->
+<div class="sidebar" id="mySidebar">
+  <h2>Admin</h2>
+  <ul class="nav nav-pills nav-stacked">
+    <li><a href="profile.php">Profile</a></li>
+    <li><a href="adminDashboard.php#section1">Membership List</a></li>
+    <li><a href="adminDashboard.php#section2">Manage Staff</a></li>
+    <li><a href="adminDashboard.php#section3">Manage Member</a></li>
+    <li><a href="adminDashboard.php#section4">Products Information</a></li>
+    <li><a href="customer-orders.php">Customer Orders</a></li>
+    <li><a href="review-feedback.php">Review Feedback</a></li>
+    <li><a href="Logout.php">Logout</a></li>
+  </ul>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+
 <!-- Manage Staff Content -->
-<div class="container">
+<div id="manage" class="well">
   <h2>Manage Staff</h2>
 
   <table class="table table-bordered">
@@ -145,6 +163,8 @@ $result = $connection->query($query);
       </div>
     </div>
   </div>
+
+</div>
 
 </div>
 
