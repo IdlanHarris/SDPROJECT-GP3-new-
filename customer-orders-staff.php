@@ -60,7 +60,7 @@ $orderResult = $connection->query($orderQuery);
     <li><a href="staffDashboard.php#section4">Products Information</a></li>
     <li><a href="staffDashboard.php#section5">Customer Orders</a></li>
     <li><a href="reviewfeedback-staff.php">Review Feedback</a></li>
-    <li><a href="LogOut.php">Logout</a></li>
+    <li><a href="Logout.php">Logout</a></li>
   </ul>
 </div>
 

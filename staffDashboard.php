@@ -49,7 +49,7 @@ $memberResult = $connection->query($memberQuery);
     <li><a href="#section4">Products Information</a></li>
     <li><a href="customer-orders-staff.php">Customer Orders</a></li>
     <li><a href="reviewfeedback-staff.php">Review Feedback</a></li>
-    <li><a href="LogOut.php">Logout</a></li>
+    <li><a href="Logout.php">Logout</a></li>
   </ul>
 </div>
 
@@ -143,7 +143,7 @@ $memberResult = $connection->query($memberQuery);
 
   </table>
   </div>
-    <a href="manageMember.php" class="btn btn-info">Manage Member</a>
+    <a href="manageMember-staff.php" class="btn btn-info">Manage Member</a>
   </div>
     
     <!-- Product Information Section -->
