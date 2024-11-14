@@ -108,6 +108,8 @@ $result = $connection->query($query);
       ?>
     </tbody>
   </table>
+  
+  <div class="mt-2"><a href="adminDashboard.php#section4"><button type="submit" class="btn btn-primary">↩</button></a></div>
 
   <!-- Edit Product Modal -->
   <div id="editProductModal" class="modal fade" role="dialog">

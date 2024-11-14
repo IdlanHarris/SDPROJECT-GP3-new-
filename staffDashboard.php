@@ -18,7 +18,7 @@ $database = new Database();
 $connection = $database->connect();
 
 // Fetch member details from the database
-$memberQuery = "SELECT user_id, username, email, phone_number FROM users WHERE user_id LIKE 'M%'";
+$memberQuery = "SELECT user_id, username, email, phone_number, membership FROM users WHERE user_id LIKE 'M%' ORDER BY user_id ASC";
 $memberResult = $connection->query($memberQuery);
 
 ?>
@@ -108,21 +108,22 @@ $memberResult = $connection->query($memberQuery);
     </table>
   </div>
 
-   <!-- Manage Member Section -->
-   <div id="section3" class="well">
-   
-   <div class="">
- <h2>Member Information</h2>
- <table class="table table-bordered">
-   <thead>
-     <tr>
-       <th>User ID</th>
-       <th>Username</th>
-       <th>Email</th>
-       <th>Phone Number</th>
-     </tr>
-   </thead>
-   <tbody id="memberTableBody">
+  <!-- Manage Member Section -->
+  <div id="section3" class="well">
+  
+  <div class="">
+<h2>Member Information</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Membership Status</th>
+    </tr>
+  </thead>
+  <tbody id="memberTableBody">
   <?php
   // Check if there are any members and display them
   if ($memberResult && $memberResult->rowCount() > 0) {
@@ -132,6 +133,7 @@ $memberResult = $connection->query($memberQuery);
           echo "<td>" . htmlspecialchars($row['username']) . "</td>";
           echo "<td>" . htmlspecialchars($row['email']) . "</td>";
           echo "<td>" . htmlspecialchars($row['phone_number']) . "</td>";
+          echo "<td>" . htmlspecialchars($row['membership']) . "</td>";
           echo "</tr>";
       }
   } else {

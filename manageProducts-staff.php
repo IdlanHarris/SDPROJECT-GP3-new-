@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
 }
 
 // Fetch all products
-$query = "SELECT product_id, product_name, price, stock_quantity FROM products";
+$query = "SELECT product_id, product_name, price, stock_quantity FROM products ORDER BY product_id ASC";
 $result = $connection->query($query);
 ?>
 
@@ -108,6 +108,8 @@ $result = $connection->query($query);
       ?>
     </tbody>
   </table>
+
+  <div class="mt-2"><a href="staffDashboard.php#section4"><button type="submit" class="btn btn-primary">↩</button></a></div>
 
   <!-- Edit Product Modal -->
   <div id="editProductModal" class="modal fade" role="dialog">
@@ -199,7 +201,7 @@ $(document).on('click', '.remove-btn', function() {
     if (confirm('Are you sure you want to remove this product?')) {
         $.ajax({
             type: 'POST',
-            url: 'manageProducts.php',
+            url: 'manageProducts-staff.php',
             data: { remove_id: productId },
             success: function(response) {
                 const result = JSON.parse(response);

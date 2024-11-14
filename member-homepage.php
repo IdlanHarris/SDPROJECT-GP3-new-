@@ -478,8 +478,10 @@ if (!isset($_SESSION['user_id'])) {
                         <div class="section-title">
                             <span>Our Product</span>
                             <h2>BUY WITH US</h2> 
-                        </div>                        
-                        <a href="product-page.php" class="primary-btn btn-normal appointment-btn">MORE DETAILS</a>                         
+                        </div>
+                        <div  style="display: flex; justify-content: right;">
+                            <a href="product-page.php" class="primary-btn btn-normal appointment-btn">MORE DETAILS</a>
+                        </div>                    
                     </div>
                 </div>
             </div>
@@ -542,8 +544,7 @@ if (!isset($_SESSION['user_id'])) {
                         <div class="section-title">
                             <span>Our Team</span>
                             <h2>TRAIN WITH EXPERTS</h2>                            
-                        </div>
-                        <a href="team.html" class="primary-btn btn-normal appointment-btn">MORE DETAILS </a>   
+                        </div> 
                     </div>
                 </div>
             </div>

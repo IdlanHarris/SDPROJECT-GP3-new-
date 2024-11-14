@@ -21,7 +21,7 @@ $staffQuery = "SELECT user_id, username, email, phone_number FROM users WHERE us
 $staffResult = $connection->query($staffQuery);
 
 // Fetch member details from the database
-$memberQuery = "SELECT user_id, username, email, phone_number FROM users WHERE user_id LIKE 'M%'";
+$memberQuery = "SELECT user_id, username, email, phone_number, membership FROM users WHERE user_id LIKE 'M%'";
 $memberResult = $connection->query($memberQuery);
 
 ?>
@@ -111,8 +111,6 @@ $memberResult = $connection->query($memberQuery);
     </table>
   </div>
 
- 
-
   <!-- Manage Staff Section -->
   <div id="section2" class="well">
   <div class="">
@@ -165,6 +163,7 @@ $memberResult = $connection->query($memberQuery);
         <th>Username</th>
         <th>Email</th>
         <th>Phone Number</th>
+        <th>Membership Status</th>
       </tr>
     </thead>
     <tbody id="memberTableBody">
@@ -177,6 +176,7 @@ $memberResult = $connection->query($memberQuery);
           echo "<td>" . htmlspecialchars($row['username']) . "</td>";
           echo "<td>" . htmlspecialchars($row['email']) . "</td>";
           echo "<td>" . htmlspecialchars($row['phone_number']) . "</td>";
+          echo "<td>" . htmlspecialchars($row['membership']) . "</td>";
           echo "</tr>";
       }
   } else {
@@ -207,8 +207,7 @@ $memberResult = $connection->query($memberQuery);
             // Fetch product details from the database in ascending order by product_id
             $productQuery = "SELECT product_id, product_name, price, stock_quantity FROM products ORDER BY product_id ASC";
             $productResult = $connection->query($productQuery);
-
-
+            
             // Check if there are any products and display them
             if ($productResult && $productResult->rowCount() > 0) {
                 while ($row = $productResult->fetch(PDO::FETCH_ASSOC)) {

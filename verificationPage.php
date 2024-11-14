@@ -118,31 +118,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row">
                 <div class="col-lg-3">
                     <div class="logo">
-                        <a href="./index.html">
-                            <img src="img/logo.png" alt="">
+                        <a href="member-homepage.php">
+                            <img src="img/logo.png" alt="" width="225">
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="nav-menu">
                         <ul>
-                            <li><a href="./index.html">Home</a></li>
-                            <li><a href="./about-us.html">About Us</a></li>
-                            <li><a href="./class-details.html">Classes</a></li>
-                            <li><a href="./services.html">Services</a></li>
-                            <li><a href="./team.html">Our Team</a></li>
-                            <li class="active"><a href="#">Pages</a>
+                            <li class="active"><a href="member-homepage.php">Home</a>
                                 <ul class="dropdown">
-                                    <li><a href="./about-us.html">About us</a></li>
-                                    <li><a href="./class-timetable.html">Classes timetable</a></li>
-                                    <li><a href="./bmi-calculator.html">Bmi calculate</a></li>
-                                    <li><a href="./team.html">Our team</a></li>
-                                    <li><a href="./gallery.html">Gallery</a></li>
-                                    <li><a href="./blog.html">Our blog</a></li>
-                                    <li><a href="./404.html">404</a></li>
+                                    <li><a href="profile.php">Profile</a></li>
+                                    <li><a href="bmi-calculator.php">Bmi calculate</a></li>
+                                    <li><a href="Logout.php">Log Out</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./class-details.html">Classes</a>
+                                <ul class="dropdown">
+                                    <li><a href="./class-timetable.html">Classes timetable</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./services.html">Services</a>
+                                <ul class="dropdown">
+                                    <li><a href="product-page.php">Our Product</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./contact.html">Contact Us</a></li>
+                            <li><a href="./about-us.html">About Us</a>
+                                <ul class="dropdown">
+                                    <li><a href="./gallery.html">Gallery</a></li>
+                                    <li><a href="./blog.html">Our blog</a></li>
+                                    <li><a href="./team.html">Our team</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>

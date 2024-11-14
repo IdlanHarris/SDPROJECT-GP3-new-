@@ -6,9 +6,9 @@ session_start(); // Ensure session is started
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-  // If not logged in, redirect to the login page
-  header("Location: /");
-  exit();
+    // If not logged in, redirect to the login page
+    header("Location: /");
+    exit();
 }
 
 // Debugging error reporting
@@ -38,14 +38,14 @@ $purchaseHistory = $statement->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Purchase History</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="adminDashboard.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Purchase History</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="adminDashboard.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -182,11 +182,11 @@ $purchaseHistory = $statement->fetchAll(PDO::FETCH_ASSOC);
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb-text">
-                        <h2>Workout History</h2>
+                        <h2>Purchase History</h2>
                         <div class="bt-option">
                             <a href="member-homepage.php">Home</a>
                             <a href="profile.php">Profile</a>
-                            <span>Workout History</span>
+                            <span>Purchase History</span>
                         </div>
                     </div>
                 </div>
@@ -207,22 +207,22 @@ $purchaseHistory = $statement->fetchAll(PDO::FETCH_ASSOC);
                         <table>
                             <thead>
                                 <tr>
-                                  <th>Product ID</th>
-                                  <th>Product Name</th>
-                                  <th>Quantity</th>
-                                  <th>Total Price (RM)</th>
-                                  <th>Actions</th>
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Total Price (RM)</th>
+                                <th>Actions</th>
                                 </tr>
                             </thead>
-                              <tbody id="purchaseHistoryTableBody">
+                            <tbody id="purchaseHistoryTableBody">
                                 <?php if ($purchaseHistory && count($purchaseHistory) > 0): ?>
-                                  <?php foreach ($purchaseHistory as $purchase): ?>
+                                <?php foreach ($purchaseHistory as $purchase): ?>
                                     <tr>
-                                      <td><?= htmlspecialchars($purchase['product_id']) ?></td>
-                                      <td><?= htmlspecialchars($purchase['product_name']) ?></td>
-                                      <td><?= htmlspecialchars($purchase['quantity']) ?></td>
-                                      <td><?= htmlspecialchars(number_format($purchase['total_price'], 2)) ?></td>
-                                      <td>
+                                    <td><?= htmlspecialchars($purchase['product_id']) ?></td>
+                                    <td><?= htmlspecialchars($purchase['product_name']) ?></td>
+                                    <td><?= htmlspecialchars($purchase['quantity']) ?></td>
+                                    <td><?= htmlspecialchars(number_format($purchase['total_price'], 2)) ?></td>
+                                    <td>
                                         <button class="btn btn-primary printRow" 
                                                 data-product-id="<?= htmlspecialchars($purchase['product_id']) ?>" 
                                                 data-product-name="<?= htmlspecialchars($purchase['product_name']) ?>" 

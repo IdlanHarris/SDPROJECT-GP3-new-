@@ -31,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } else {
             echo json_encode(['success' => false, 'message' => 'Error: Could not update membership status.']);
+            header("Location: gateway.php");
+            exit();
         }
     } else {
 
