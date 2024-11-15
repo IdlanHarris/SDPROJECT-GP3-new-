@@ -28,7 +28,7 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         
         <div class="text-center">
-            <img id="view-image" src="/img/Default pfp.png" alt="Profile Image" width="150px" class="profile-image"><br>
+            <img id="view-image" src="../img/Default pfp.png" alt="Profile Image" width="150px" class="profile-image"><br>
         </div>
 
         <div class="mb-3">
@@ -68,13 +68,13 @@ if (!isset($_SESSION['user_id'])) {
                         $('#view-email').text('N/A');
                         $('#view-phoneNumber').text('N/A');
                         $('#view-status').text('N/A');
-                        $('#view-image').attr('src', '../assets/Default pfp.png');
+                        $('#view-image').attr('src', 'img/Default pfp.png');
                     } else {
                         $('#view-username').text(data.username);
                         $('#view-email').text(data.email);
                         $('#view-phoneNumber').text(data.phone_number);
                         $('#view-status').text(data.membership);
-                        $('#view-image').attr('src', data.profile_image ? '../' + data.profile_image : '../assets/Default pfp.png');
+                        $('#view-image').attr('src', data.profile_image ? '../' + data.profile_image : 'img/Default pfp.png');
 
                         // Set user_id in the home button for redirection
                         $('#home-button').data('user-id', data.user_id);
@@ -84,7 +84,7 @@ if (!isset($_SESSION['user_id'])) {
                     $('#view-username').text('Error loading data');
                     $('#view-email').text('Error loading data');
                     $('#view-phoneNumber').text('Error loading data');
-                    $('#view-image').attr('src', '../img/Default pfp.png');
+                    $('#view-image').attr('src', 'img/Default pfp.png');
                 }
             });
 
