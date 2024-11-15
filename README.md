@@ -40,3 +40,12 @@
 
 5. **Enable PDO Pgsql (IMPORTANT):**
     - Go to your php.ini file and uncomment this line `extension=pdo_pgsql`.
+
+## Github Link
+[Github](https://github.com/IdlanHarris/SDPROJECT-GP3-new-)
+
+## Website Link
+[Broncogym.site](https://broncogym.site/)
+
+## Username and Password
+
