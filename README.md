@@ -48,4 +48,13 @@
 [Broncogym.site](https://broncogym.site/)
 
 ## Username and Password
+- Admin User
+    Username: admin
+    Pass: admin
+- Staff User
+    Username: s2
+    Pass: s2
+- Member User
+    Username: chombi
+    Pass: chombi
 
