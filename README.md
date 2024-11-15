@@ -1,5 +1,5 @@
 ## Requirements
-- [Apache Server - Laragon (recommended)](https://laragon.org/)
+- [Apache Server - Laragon (recommended)](https://laragon.org/download/)
 - [Composer](https://getcomposer.org/Composer-Setup.exe)
 - [PDO Pgsql enabled](https://www.php.net/manual/en/ref.pdo-pgsql.php)
 
@@ -48,13 +48,21 @@
 [Broncogym.site](https://broncogym.site/)
 
 ## Username and Password
-- Admin User
+## Admin User
+    ```
     Username: admin
     Pass: admin
-- Staff User
+    ```
+## Staff User
+    ```
     Username: s2
     Pass: s2
-- Member User
+    ```  
+## Member User
+    ```
     Username: chombi
     Pass: chombi
+    ```
 
+
+  
