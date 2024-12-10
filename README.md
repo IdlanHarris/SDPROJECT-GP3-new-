@@ -8,9 +8,9 @@
 1. **Clone or Download the Project:**
     - If you have Git installed, clone the repository using:
 
-        ```bash
-        git clone https://your-github-repository-url.git
         ```
+        git clone https://your-github-repository-url.git
+        
 
     - Alternatively, download the project ZIP file from your preferred source and extract it.
 
