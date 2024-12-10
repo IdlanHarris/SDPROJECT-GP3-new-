@@ -20,9 +20,9 @@
 3. **Install Dependencies:**
     Run the following command to install project dependencies using Composer:
 
-        ```bash
+        
         composer install
-        ```
+        
 
 4. **Configure Database Settings:**
     - Create a `.env` file in the project root directory.
